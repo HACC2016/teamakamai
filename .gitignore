@@ -184,3 +184,6 @@ composer.phar
 
 ### Git ###
 *.orig
+
+### personal ###
+public/assets/
