@@ -8,9 +8,10 @@
     "dev": "gulp watch"
   },
   "dependencies": {
-    "gulp": "^3.9.1",
     "bower": "^1.7.9",
-    "laravel-elixir": "^5.0.0",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.1.7",
@@ -21,6 +22,9 @@
     "gulp-sass": "^2.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.4.2",
-    "gulp-util": "^3.0.7"
+    "gulp-util": "^3.0.7",
+    "laravel-elixir": "^5.0.0",
+    "mysql": "^2.11.1",
+    "socket.io": "^1.4.8"
   }
 }

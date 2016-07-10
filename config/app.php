@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://local.telecare.us'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +108,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     /*
     |--------------------------------------------------------------------------
@@ -155,6 +155,10 @@ return [
         telecare\Providers\AuthServiceProvider::class,
         telecare\Providers\EventServiceProvider::class,
         telecare\Providers\RouteServiceProvider::class,
+        /*
+         * Custom providers
+         */
+        telecare\Providers\UserServiceProvider::class
 
     ],
 

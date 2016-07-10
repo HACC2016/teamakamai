@@ -18,7 +18,7 @@ var gulp         = require('gulp'),
     ].join("\n");
 var JS = [
     'bower_components/jquery/dist/jquery.js',
-    'bower_components/Materialize/dist/js/materialize.js',
+    'bower_components/Materialize/dist/js/materialize.js', 'bower_components/toastr/toastr.js',
     'resources/assets/js/*.js', 'resources/assets/js/**/*.js'
 ];
 

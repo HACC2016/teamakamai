@@ -3,6 +3,7 @@
 namespace telecare\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use telecare\Http\Middleware\UserMiddleware;
 
 class Kernel extends HttpKernel
 {
@@ -28,7 +29,7 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \telecare\Http\Middleware\VerifyCsrfToken::class,
+            \telecare\Http\Middleware\VerifyCsrfToken::class
         ],
 
         'api' => [

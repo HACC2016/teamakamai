@@ -2,8 +2,7 @@
 
 namespace telecare\Http\Controllers;
 
-use telecare\Http\Requests;
-use Illuminate\Http\Request;
+use \telecare\Interfaces\UserRepositoryInterface;
 
 class HomeController extends Controller
 {
@@ -14,7 +13,15 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'index']);
+
+    }
+
+    public function index()
+    {
+        return view('welcome', [
+            'user'  => \Auth::check() ? \Auth::user() : false
+        ]);
     }
 
     /**
@@ -22,8 +29,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function home(UserRepositoryInterface $users)
     {
-        return view('home');
+        return view('home', [
+            'users' => $users->doSelectUsers()
+        ]);
     }
 }

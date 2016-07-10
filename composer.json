@@ -1,12 +1,14 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "flaviu/telecare.us",
+    "description": "Telecare US",
+    "keywords": ["framework", "laravel","telecare"],
+    "private": true,
     "license": "MIT",
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*"
+        "laravel/framework": "5.2.*",
+        "twilio/sdk": "^4.10"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
