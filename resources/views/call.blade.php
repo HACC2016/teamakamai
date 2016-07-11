@@ -3,6 +3,13 @@
 @section('menu') @endsection
 
 @section('content')
+    <div style="background: #000; width: 100%; height: 100%; min-height: 100%; position: relative;" class="">
+        <div id="localMedia"
+             style="width: 100px; height: 100px; bottom: 5px; right: 5px; position: absolute; z-index: 2; border: 1px solid #fff; ">
+            &nbsp;</div>
+        <div id="remoteMedia" style="width: 100%; height:100%; position: absolute; z-index: 1; top: 0;left: 0; ">
+            &nbsp;</div>
+    </div>
 
 @endsection
 
@@ -18,12 +25,23 @@
         var accessManager = new Twilio.AccessManager(token);
 
         conversationsClient = new Twilio.Conversations.Client(accessManager);
-        conversationsClient.listen().then(function(){
-            alert('connected')
+        conversationsClient.listen().then(function () {
+            console.log('listening')
         }, function (error) {
-            log('Could not connect to Twilio: ' + error.message);
-            console.log(error);
+            console.log('error', error);
         });
+
+
+        previewMedia = new Twilio.Conversations.LocalMedia();
+        Twilio.Conversations.getUserMedia().then(
+                function (mediaStream) {
+                    previewMedia.addStream(mediaStream);
+                    previewMedia.attach('#localMedia');
+                },
+                function (error) {
+                    console.error('Unable to access local media', error);
+                });
+
 
     </script>
 @endsection

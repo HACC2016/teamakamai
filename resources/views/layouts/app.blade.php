@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -80,10 +80,11 @@
         integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
         crossorigin="anonymous"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script type="text/javascript" src="{!! asset('assets/js/vendor.js') !!}"></script>
 @section('javascripts')
     <script type="text/javascript">
         var user          = {!! Auth::check() ? Auth::user() : 'false' !!};
-        var clientAddress = 'http://localhost:{{env('SOCKET_PORT')}}/';
+        var clientAddress = '//localhost:{{env('SOCKET_PORT')}}/';
         var logoutURL     = '{{ route('auth.logout') }}';
     </script>
 @show

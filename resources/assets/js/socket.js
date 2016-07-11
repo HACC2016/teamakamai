@@ -2,7 +2,9 @@
     if(!user || !user.id) return false;
 
 
-    var socket = io.connect(clientAddress, {transports: ['websocket', 'polling', 'flashsocket']});
+    var socket = io.connect(clientAddress, {
+        transports: [ 'websocket','polling','flashsocket']
+    });
     socket.on('disconnect',function(){
         window.location = logoutURL;
     });

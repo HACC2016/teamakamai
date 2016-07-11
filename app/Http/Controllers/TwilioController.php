@@ -10,6 +10,10 @@ use telecare\Http\Requests;
 
 class TwilioController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     public function callAction($method, $parameters){
 
         $token = new \Services_Twilio_AccessToken(
@@ -17,7 +21,7 @@ class TwilioController extends Controller
             config('twilio.API'),
             config('twilio.API_KEY'),
             3600,
-            'DEMO'
+            \Auth::user()->client_token
         );
 
         // Grant access to Conversations

@@ -1,6 +1,25 @@
 require('dotenv').config();
-var io      = require('socket.io')(process.env.SOCKET_PORT);
-// io.set('origins', '*localhost:' + process.env.SOCKET_PORT );
+
+var app = require('express').createServer();
+var fs = require('fs');
+
+var options = {
+    key: fs.readFileSync('./storage/ssl/client.key'),
+    cert: fs.readFileSync('./storage/ssl/client.crt'),
+    passphrase: 'telecare',
+    requestCert: true
+};
+
+var server = require('https').createServer(options, app)
+
+server.listen(process.env.SOCKET_PORT, function() {
+    console.log('server up and running at %s port', process.env.SOCKET_PORT);
+});
+
+var io      = require('socket.io').listen(server, {
+    origins: ['localhost']
+});
+
 
 var mysql   = require('mysql').createConnection({
     host: process.env.DB_HOST,

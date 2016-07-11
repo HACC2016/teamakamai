@@ -19,11 +19,21 @@ var gulp         = require('gulp'),
 var JS = [
     'bower_components/jquery/dist/jquery.js',
     'bower_components/Materialize/dist/js/materialize.js', 'bower_components/toastr/toastr.js',
-    'resources/assets/js/*.js', 'resources/assets/js/**/*.js'
+    'bower_components/angular/angular.js',
+    'bower/url-to/url-to.js'
 ];
 
 gulp.task('js:dev', function () {
-    return gulp.src(JS)
+    gulp.src(JS)
+        .pipe(sourcemaps.init())
+        .pipe(concat('vendor.js'), {newLine: ';'})
+        .pipe(uglify())
+        .pipe(header(banner, {pkg: pkg}))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('public/assets/js/'))
+        .pipe(livereload());
+
+    gulp.src(['resources/assets/js/*.js', 'resources/assets/js/**/*.js'])
         .pipe(sourcemaps.init())
         .pipe(concat('main.js'), {newLine: ';'})
         .pipe(sourcemaps.write('.'))
@@ -31,6 +41,7 @@ gulp.task('js:dev', function () {
         .pipe(livereload());
 });
 gulp.task('js:main', ['js:dev'], function () {
+
     return gulp.src('public/assets/js/main.js')
         .pipe(uglify())
         .pipe(header(banner, {pkg: pkg}))
