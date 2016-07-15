@@ -11,7 +11,7 @@
                         @foreach($users as $item)
                             <div class="col-md-3 col-sm-6 col-xs-6">
                                 <div class="text-center">
-                                    <p><img class="img-circle" src="http://lorempixel.com/140/140/people/?id={{$item->id}}" /></p>
+                                    <p><img class="img-circle" src="//lorempixel.com/140/140/people/?id={{$item->id}}" /></p>
 
                                     <p>{{ $item->name }}</p>
                                 </div>

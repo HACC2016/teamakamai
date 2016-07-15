@@ -1,46 +1,38 @@
 require('dotenv').config();
 
-var app = require('express').createServer();
-var fs = require('fs');
+var app = require('express')();
+var fs  = require('fs');
+
 
 var options = {
-    key: fs.readFileSync('./storage/ssl/client.key'),
-    cert: fs.readFileSync('./storage/ssl/client.crt'),
-    passphrase: 'telecare',
-    requestCert: true
+    key: fs.readFileSync(__dirname + '/storage/ssl/file.pem'),
+    cert: fs.readFileSync(__dirname + '/storage/ssl/file.crt'),
+    origins: '*'
 };
-
-var server = require('https').createServer(options, app)
-
-server.listen(process.env.SOCKET_PORT, function() {
-    console.log('server up and running at %s port', process.env.SOCKET_PORT);
-});
-
-var io      = require('socket.io').listen(server, {
-    origins: ['localhost']
-});
+var https   = require('https').createServer(options, app);
+var io      = require('socket.io')(https);
 
 
-var mysql   = require('mysql').createConnection({
+var mysql = require('mysql').createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE
 });
 
-function sql($query, arguments){
-    if(!mysql.threadId)
-    mysql.connect(function (err) {
-        if (err) {
-            console.error('error connecting: ' + err.stack);
-            return;
-        }
-        console.log('SQL connected as id ' + mysql.threadId);
-    });
+function sql($query, arguments) {
+    if (!mysql.threadId)
+        mysql.connect(function (err) {
+            if (err) {
+                console.error('error connecting: ' + err.stack);
+                return;
+            }
+            console.log('SQL connected as id ' + mysql.threadId);
+        });
     var data = [];
     var rows = 0;
 
-    mysql.query($query, arguments || [], function(err,_data) {
+    mysql.query($query, arguments || [], function (err, _data) {
         data = _data;
         rows = _data ? _data.length : 0;
         if (err) console.log(err);
@@ -55,7 +47,7 @@ function sql($query, arguments){
 }
 
 io.on('connection', function (socket) {
-    var client = false;
+    var client  = false;
     var timeout = null;
 
     setInterval(function () {
@@ -68,17 +60,21 @@ io.on('connection', function (socket) {
         }, 3000);
     });
 
-    socket.on('register',function(user){
-        sql('UPDATE users SET client_token = ? where id = ? ', [ socket.client.id, user.id]);
+    socket.on('register', function (user) {
+        sql('UPDATE users SET client_token = ? where id = ? ', [socket.client.id, user.id]);
         client = user;
         console.log('user registered', socket.client.id, client);
     });
 
     socket.on('disconnect', function () {
-        if(client){
+        if (client) {
             sql('update users set client_token = "" where id = ?', [client.id]);
         }
-        console.log('client disconnect', socket.client.id , client);
+        console.log('client disconnect', socket.client.id, client);
     });
 });
 
+
+https.listen(process.env.SOCKET_PORT, function () {
+    console.log('listening on % port ', process.env.SOCKET_PORT);
+});
