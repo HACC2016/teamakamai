@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "angular": "angularjs#^1.5.7",
-    "url-to": "^0.1.1"
+    "url-to": "^0.1.1",
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.6"
   }
 }

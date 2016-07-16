@@ -27,4 +27,4 @@ Route::get('password/reset/{token?}', ['as' => 'auth.password.reset', 'uses' => 
 Route::post('password/email', ['as' => 'auth.password.email', 'uses' => 'Auth\PasswordController@sendResetLinkEmail']);
 Route::post('password/reset', ['as' => 'auth.password.reset', 'uses' => 'Auth\PasswordController@reset']);
 
-Route::get('call/{token}', ['as'=>'call', 'uses'=>'TwilioController@callAction']);
+Route::get('call/{token}', ['as'=>'call', 'uses'=>'TwilioController@create']);

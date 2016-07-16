@@ -1,47 +1,45 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('menu') @endsection
+    <title>telecare.us</title>
 
-@section('content')
-    <div style="background: #000; width: 100%; height: 100%; min-height: 100%; position: relative;" class="">
-        <div id="localMedia"
-             style="width: 100px; height: 100px; bottom: 5px; right: 5px; position: absolute; z-index: 2; border: 1px solid #fff; ">
-            &nbsp;</div>
-        <div id="remoteMedia" style="width: 100%; height:100%; position: absolute; z-index: 1; top: 0;left: 0; ">
-            &nbsp;</div>
-    </div>
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css"
+          ="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
 
-@endsection
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+
+</head>
+<body id="app-layout call-layout">
+
+
+
+<!-- JavaScripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"
+        integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+<script src="//local.telecare.us:{{env('SOCKET_PORT')}}/socket.io/socket.io.js"></script>
+
+
 
 @section('javascripts')
-    @parent
-
-    <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
-    <script src="https://media.twiliocdn.com/sdk/js/conversations/v0.13/twilio-conversations.min.js"></script>
-
     <script type="text/javascript">
-        var token = '{!! $token !!}}';
-
-        var accessManager = new Twilio.AccessManager(token);
-
-        conversationsClient = new Twilio.Conversations.Client(accessManager);
-        conversationsClient.listen().then(function () {
-            console.log('listening')
-        }, function (error) {
-            console.log('error', error);
-        });
-
-
-        previewMedia = new Twilio.Conversations.LocalMedia();
-        Twilio.Conversations.getUserMedia().then(
-                function (mediaStream) {
-                    previewMedia.addStream(mediaStream);
-                    previewMedia.attach('#localMedia');
-                },
-                function (error) {
-                    console.error('Unable to access local media', error);
-                });
-
-
+        var user          = {!! Auth::check() ? Auth::user() : 'false' !!};
+        var clientAddress = '//localhost:{{env('SOCKET_PORT')}}/';
+        var logoutURL     = '{{ route('auth.logout') }}';
+        var clientToken = '{{ Auth::check() ? Auth::user()->getTwilioCode() : '' }}';
     </script>
-@endsection
+@show
+<script type="text/javascript" src="{!! asset('assets/js/main.js') !!}"></script>
+</body>
+</html>

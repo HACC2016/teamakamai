@@ -1,16 +1,73 @@
-(function(){
-    $('[data-call]').on('click', function(){
-        var w = 400, h=400;
-        // Fixes dual-screen position                         Most browsers      Firefox
-        var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
-        var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+var conversationsClient;
+var activeConversation;
 
-        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+// Check for WebRTC
+if (!navigator.webkitGetUserMedia && !navigator.mozGetUserMedia) {
+    alert('WebRTC is not available in your browser.');
+}
+var accessManager = new Twilio.AccessManager(clientToken);
 
-        var left = ((width / 2) - (w / 2)) + dualScreenLeft;
-        var top = ((height / 2) - (h / 2)) + dualScreenTop;
+// Create a Conversations Client and connect to Twilio
+conversationsClient = new Twilio.Conversations.Client(accessManager);
+conversationsClient.listen().then(clientConnected, function (error) {
+    log('Could not connect to Twilio: ' + error.message);
+    console.log(error);
+});
 
-        window.open('/call/' + $(this).data('call'), "_blank", "toolbar=no,scrollbars=no,resizable=no,width="+w+",height="+h+",top="+top+",left="+left+"");
+// Successfully connected!
+function clientConnected() {
+    //document.getElementById('invite-controls').style.display = 'block';
+    log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
+
+    conversationsClient.on('invite', function (invite) {
+        log('Incoming invite from: ' + invite.from);
+        invite.accept().then(conversationStarted);
     });
-})();
+
+    $('[data-call]').on('click',function () {
+        var inviteTo = $(this).data('call');
+        console.log('Calling %d', inviteTo);
+        
+        if (activeConversation) {
+            // Add a participant
+            activeConversation.invite(inviteTo);
+        } else {
+            conversationsClient.inviteToConversation(inviteTo).then(conversationStarted, function (error) {
+                log('Unable to create conversation');
+                console.error('Unable to create conversation', error);
+            });
+        }
+    });
+}
+// Conversation is live
+function conversationStarted(conversation) {
+    log('In an active Conversation');
+    activeConversation = conversation;
+    $('#conversation').modal('show');
+    // Draw local video, if not already previewing
+    conversation.localMedia.attach('#local-media');
+
+
+    // When a participant joins, draw their video on screen
+    conversation.on('participantConnected', function (participant) {
+        log("Participant '" + participant.identity + "' connected");
+        participant.media.attach('#remote-media');
+    });
+
+    // When a participant disconnects, note in log
+    conversation.on('participantDisconnected', function (participant) {
+        log("Participant '" + participant.identity + "' disconnected");
+    });
+
+    // When the conversation ends, stop capturing local video
+    conversation.on('disconnected', function (conversation) {
+        log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
+        conversation.localMedia.stop();
+        conversation.disconnect();
+        activeConversation = null;
+    });
+}
+// Activity log
+function log(message) {
+    return console.log(message);
+}

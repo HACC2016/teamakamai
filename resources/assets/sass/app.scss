@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+html, body{
+  min-height: 100%;
+}
 body {
   font-family: 'Lato';
 }
@@ -7,5 +10,10 @@ body {
 .fa-btn {
   margin-right: 6px;
 }
+video,audio,canvas{
+    height: 100%;
+    width: 100%;
+}
 
 @import "../../../bower_components/toastr/toastr.scss";
+@import 'calls';

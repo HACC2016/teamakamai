@@ -1,54 +1,23 @@
 require('dotenv').config();
 
+var fs = require('fs');
+var certificate = fs.readFileSync('./storage/ssl/cert.pem');
+var privateKey = fs.readFileSync('./storage/ssl/key.pem');
+
 var app = require('express')();
-var fs  = require('fs');
+var credentials = {key: privateKey, cert: certificate};
+var https = require('https').Server(credentials,app);
+var io  = require('socket.io')(https);
+var sql = require('./_node/sql');
 
-
-var options = {
-    key: fs.readFileSync(__dirname + '/storage/ssl/file.pem'),
-    cert: fs.readFileSync(__dirname + '/storage/ssl/file.crt'),
-    origins: '*'
-};
-var https   = require('https').createServer(options, app);
-var io      = require('socket.io')(https);
-
-
-var mysql = require('mysql').createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE
+https.listen(process.env.SOCKET_PORT, function(){
+    console.log('listening on *:' + process.env.SOCKET_PORT);
 });
-
-function sql($query, arguments) {
-    if (!mysql.threadId)
-        mysql.connect(function (err) {
-            if (err) {
-                console.error('error connecting: ' + err.stack);
-                return;
-            }
-            console.log('SQL connected as id ' + mysql.threadId);
-        });
-    var data = [];
-    var rows = 0;
-
-    mysql.query($query, arguments || [], function (err, _data) {
-        data = _data;
-        rows = _data ? _data.length : 0;
-        if (err) console.log(err);
-    });
-
-    return {
-        data: data,
-        rows: rows,
-        query: $query,
-        arguments: arguments
-    };
-}
 
 io.on('connection', function (socket) {
     var client  = false;
     var timeout = null;
+    console.log('connected', socket.client.id);
 
     setInterval(function () {
         socket.emit('hb', {beat: 1});
@@ -75,6 +44,3 @@ io.on('connection', function (socket) {
 });
 
 
-https.listen(process.env.SOCKET_PORT, function () {
-    console.log('listening on % port ', process.env.SOCKET_PORT);
-});

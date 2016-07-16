@@ -73,19 +73,19 @@
 @yield('content')
 
 <!-- JavaScripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"
-        integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"
-        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script src="//local.telecare.us:{{env('SOCKET_PORT')}}/socket.io/socket.io.js"></script>
+
+<script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
+<script src="https://media.twiliocdn.com/sdk/js/conversations/v0.13/twilio-conversations.min.js"></script>
+
 <script type="text/javascript" src="{!! asset('assets/js/vendor.js') !!}"></script>
+
 @section('javascripts')
     <script type="text/javascript">
         var user          = {!! Auth::check() ? Auth::user() : 'false' !!};
         var clientAddress = '//localhost:{{env('SOCKET_PORT')}}/';
         var logoutURL     = '{{ route('auth.logout') }}';
+        var clientToken = '{{ Auth::check() ? Auth::user()->getTwilioCode() : '' }}';
     </script>
 @show
 <script type="text/javascript" src="{!! asset('assets/js/main.js') !!}"></script>
