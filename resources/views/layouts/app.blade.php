@@ -73,7 +73,7 @@
 @yield('content')
 
 <!-- JavaScripts -->
-<script src="//local.telecare.us:{{env('SOCKET_PORT')}}/socket.io/socket.io.js"></script>
+<script src="//{{config('APP_URL')}}:{{env('SOCKET_PORT')}}/socket.io/socket.io.js"></script>
 
 <script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
 <script src="https://media.twiliocdn.com/sdk/js/conversations/v0.13/twilio-conversations.min.js"></script>
@@ -83,7 +83,7 @@
 @section('javascripts')
     <script type="text/javascript">
         var user          = {!! Auth::check() ? Auth::user() : 'false' !!};
-        var clientAddress = '//localhost:{{env('SOCKET_PORT')}}/';
+        var clientAddress = '//{{config('APP_URL')}}:{{env('SOCKET_PORT')}}/';
         var logoutURL     = '{{ route('auth.logout') }}';
         var clientToken = '{{ Auth::check() ? Auth::user()->getTwilioCode() : '' }}';
     </script>

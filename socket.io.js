@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 var fs = require('fs');
-var certificate = fs.readFileSync('./storage/ssl/cert.pem');
-var privateKey = fs.readFileSync('./storage/ssl/key.pem');
+var certificate = fs.readFileSync(process.env.SSL_CERT);
+var privateKey = fs.readFileSync(process.env.SSL_KEY);
 
 var app = require('express')();
 var credentials = {key: privateKey, cert: certificate};
