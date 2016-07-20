@@ -11,6 +11,7 @@ $templateCache.put("users/list.html","<div class=\"row\">\n" +
     "            <p><img class=\"img-circle\"\n" +
     "                    ng-src=\"//placeimg.com/150/150/people?id={{item.id}}\"/></p>\n" +
     "            <p>{{ item.name }}</p>\n" +
+    "            {{item.email}}\n" +
     "        </div>\n" +
     "        <div class=\"text-center\">\n" +
     "            <div class=\"btn-group\">\n" +
