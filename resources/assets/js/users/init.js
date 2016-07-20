@@ -1,0 +1,1 @@
+angular.module('users', ["common", "restmod", "platanus.inflector"]);

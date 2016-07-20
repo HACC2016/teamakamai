@@ -1,0 +1,17 @@
+<div class="row">
+    <div ng-repeat="item in items" class="col-md-3 col-sm-6 col-xs-6">
+        <div class="text-center">
+            <p><img class="img-circle"
+                    ng-src="//placeimg.com/150/150/people?id={{item.id}}"/></p>
+            <p>{{ item.name }}</p>
+        </div>
+        <div class="text-center">
+            <div class="btn-group">
+                <a ng-click="call(item.id)" href="#"
+                   class="btn btn-xs btn-success"> <i class=" fa fa-phone"></i> Call </a>
+                <a href="#eye" class="btn btn-xs btn-warning"><i class=" fa fa-eye"></i>
+                    Details </a>
+            </div>
+        </div>
+    </div>
+</div>

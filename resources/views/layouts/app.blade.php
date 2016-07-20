@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="app" ng-controller="AppController">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
+    <!-- JavaScripts -->
+
 
 </head>
 <body id="app-layout">
@@ -72,22 +74,17 @@
 
 @yield('content')
 
-<!-- JavaScripts -->
-<script src="//{{config('APP_URL')}}:{{env('SOCKET_PORT')}}/socket.io/socket.io.js"></script>
-
-<script src="https://media.twiliocdn.com/sdk/js/common/v0.1/twilio-common.min.js"></script>
-<script src="https://media.twiliocdn.com/sdk/js/conversations/v0.13/twilio-conversations.min.js"></script>
-
-<script type="text/javascript" src="{!! asset('assets/js/vendor.js') !!}"></script>
-
 @section('javascripts')
     <script type="text/javascript">
         var user          = {!! Auth::check() ? Auth::user() : 'false' !!};
-        var clientAddress = '//{{config('APP_URL')}}:{{env('SOCKET_PORT')}}/';
+        var clientAddress = '//{{config('app.url')}}:{{env('SOCKET_PORT')}}/';
         var logoutURL     = '{{ route('auth.logout') }}';
         var clientToken = '{{ Auth::check() ? Auth::user()->getTwilioCode() : '' }}';
     </script>
 @show
+
+<script src="//{{config('app.url')}}:{{env('SOCKET_PORT')}}/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="{!! asset('assets/js/vendor.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/js/main.js') !!}"></script>
 </body>
 </html>

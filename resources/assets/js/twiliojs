@@ -43,6 +43,7 @@ function clientConnected() {
 function conversationStarted(conversation) {
     log('In an active Conversation');
     activeConversation = conversation;
+
     $('#conversation').modal('show');
     // Draw local video, if not already previewing
     conversation.localMedia.attach('#local-media');
@@ -63,8 +64,11 @@ function conversationStarted(conversation) {
     conversation.on('disconnected', function (conversation) {
         log("Connected to Twilio. Listening for incoming Invites as '" + conversationsClient.identity + "'");
         conversation.localMedia.stop();
-        conversation.disconnect();
+        //conversation.disconnect();
         activeConversation = null;
+        $('#conversation').modal('hide');
+    });
+    $('#conversation').on('hidden.bs.modal', function(){
     });
 }
 // Activity log
