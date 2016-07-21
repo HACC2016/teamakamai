@@ -16,7 +16,7 @@ $templateCache.put("users/list.html","<div class=\"row\">\n" +
     "        <div class=\"text-center\">\n" +
     "            <div class=\"btn-group\">\n" +
     "                <a ng-click=\"call(item.id)\" href=\"#\"\n" +
-    "                   class=\"btn btn-xs btn-success\"> <i class=\" fa fa-phone\"></i> Call </a>\n" +
+    "                   class=\"btn btn-xs btn-success\" ng-disabled=\"!item.client_token\"> <i class=\" fa fa-phone\"></i> Call </a>\n" +
     "                <a href=\"#eye\" class=\"btn btn-xs btn-warning\"><i class=\" fa fa-eye\"></i>\n" +
     "                    Details </a>\n" +
     "            </div>\n" +

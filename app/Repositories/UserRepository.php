@@ -7,7 +7,7 @@
      class UserRepository implements UserRepositoryInterface{
 
          public function doSelectUsers(){
-            return User::all();
+            return User::where('id','<>', \Auth::id() )->get();
          }
 
      }

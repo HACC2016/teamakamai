@@ -33,6 +33,7 @@ io.on('connection', function (socket) {
         sql('UPDATE users SET client_token = ? where id = ? ', [socket.client.id, user.id]);
         client = user;
         console.log('user registered', socket.client.id, client);
+        io.sockets.emit('reload-users');
     });
 
     socket.on('disconnect', function () {
@@ -40,6 +41,7 @@ io.on('connection', function (socket) {
             sql('update users set client_token = "" where id = ?', [client.id]);
         }
         console.log('client disconnect', socket.client.id, client);
+        io.sockets.emit('reload-users');
     });
 });
 

@@ -8,8 +8,11 @@ angular.module('users').directive('usersList', function($window,$rootScope, User
 
             socket.emit('register', $window.user);
 
-            UserService.doSelectList().then(function(data){
-                scope.items = data;
+            socket.on('reload-users', function(){
+               
+                UserService.doSelectList().then(function(data){
+                    scope.items = data;
+                });
             });
 
             scope.call = function(id){
