@@ -1,13 +1,8 @@
-angular.module('users').service('Twilio', function($rootScope, $window){
+angular.module('users').service('Twilio', function($rootScope, $window, $log){
     if (!$window.navigator.webkitGetUserMedia && !$window.navigator.mozGetUserMedia) {
         $rootScope.$emit('error:outdated');
     }
     var _twilio = $window.Twilio;
-
-    if(!$window.clientToken){
-        console.log('no token');
-        return false;
-    }
 
 
     return {
@@ -16,30 +11,29 @@ angular.module('users').service('Twilio', function($rootScope, $window){
         invite: '',
         activeConversation: '',
         init: function(){
-            if(this.manager) return this;
-            console.log('Twilio.init');
+            if(this.manager || !$window.clientToken) return this;
+            //console.log('Twilio.init');
 
             this.manager = new _twilio.AccessManager($window.clientToken);
             this.client = new _twilio.Conversations.Client(this.manager);
             var _this = this;
 
             this.client.listen().then(function(){
-                console.log("Connected to Twilio. Listening for incoming Invites as %s", _this.client.identity);
+                $log.debug("Connected to Twilio. Listening for incoming Invites as %s", _this.client.identity);
 
 
                 _this.client.on('invite', function (invite) {
-                    console.log('Incoming invite from: ' + invite.from);
+                    $log.debug('Incoming invite from: ' + invite.from);
                     this.invite = invite;
                     $rootScope.$emit('twilio:incoming', invite);
                 });
 
             }, function (error) {
-                console.log('Could not connect to Twilio: ', error);
+                $log.error('Could not connect to Twilio: ', error);
             });
 
             $rootScope.$on('twilio:accept', function(){
                 if(!_this.invite) return false;
-                console.log('Accept call', invite);
 
                 _this.invite.accept().then(function(conversation){
                     $rootScope.$emit('twilio:conversation-start', conversation);
@@ -48,15 +42,14 @@ angular.module('users').service('Twilio', function($rootScope, $window){
 
             
             $rootScope.$on('twilio:call', function(ev,inviteTo){
-                console.log('Calling %d', inviteTo);
+
                 if (_this.activeConversation) {
-                    // Add a participant to an active conversation
                     _this.activeConversation.invite(inviteTo);
                 } else {
                     _this.client.inviteToConversation(inviteTo).then(function(conversation){
                         $rootScope.$emit('twilio:conversation-start', conversation);
                     }, function (error) {
-                        console.log('Unable to create conversation', error);
+                        $rootScope.$emit('twilio:error', [error, 'Unable to create conversation']);
                     });
                 }
             });
@@ -70,7 +63,6 @@ angular.module('users').service('Twilio', function($rootScope, $window){
                 // When a participant joins, draw their video on screen
                 conversation.on('participantConnected', function (participant) {
                     $rootScope.$emit('twilio:participant-connected', participant);
-                    // participant.media.attach('#remote-media');
                 });
 
                 // When a participant disconnects, note in log
@@ -80,9 +72,9 @@ angular.module('users').service('Twilio', function($rootScope, $window){
 
                 // When the conversation ends, stop capturing local video
                 conversation.on('disconnected', function (conversation) {
-                    console.log("Connected to Twilio. Listening for incoming Invites as '" + _this.client.identity + "'");
+
+                    $log.debug("Connected to Twilio. Listening for incoming Invites as '" + _this.client.identity + "'");
                     conversation.localMedia.stop();
-                    //conversation.disconnect();
                     _this.activeConversation = null;
                     $rootScope.$emit('twilio:conversation-disconnected', conversation);
                 });
