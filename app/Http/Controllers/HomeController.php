@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('welcome', [
-            'user'  => \Auth::check() ? \Auth::user() : false
+            'user' => \Auth::check() ? \Auth::user() : false
         ]);
     }
 
@@ -35,9 +35,10 @@ class HomeController extends Controller
         ]);
     }
 
-    public function avatar(){
-        $files = glob(public_path('assets/img/avatar').'/*.*');
-        $file = $files[array_rand($files)];
+    public function avatar()
+    {
+        $files = glob(public_path('assets/img/avatar') . '/*.*');
+        $file  = $files[array_rand($files)];
         return response()->file($file);
     }
 }

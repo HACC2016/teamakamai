@@ -9,7 +9,7 @@ $templateCache.put("users/list.html","<div class=\"row\">\n" +
     "    <div ng-repeat=\"item in items\" class=\"col-md-3 col-sm-6 col-xs-6\" style=\"margin-bottom: 30px;\">\n" +
     "        <div class=\"text-center\">\n" +
     "\n" +
-    "            <p><img class=\"img-circle\" ng-src=\"{{ 'avatar?id=' + item.id | url }}\" style=\"height: 50px\"/></p>\n" +
+    "            <p><img class=\"img-circle\" ng-src=\"{{ 'avatar' | url }}?id={{item.id}}\" style=\"height: 50px\"/></p>\n" +
     "            <p>{{ item.name }}</p>\n" +
     "            {{item.email}}\n" +
     "        </div>\n" +
