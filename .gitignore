@@ -189,3 +189,4 @@ composer.phar
 public/assets/
 .idea/
 .vagrant/
+!public/assets/img
