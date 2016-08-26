@@ -34,4 +34,10 @@ class HomeController extends Controller
             'users' => $users->doSelectUsers()
         ]);
     }
+
+    public function avatar(){
+        $files = glob(public_path('assets/img/avatar').'/*.*');
+        $file = $files[array_rand($files)];
+        return response()->file($file);
+    }
 }

@@ -27,6 +27,8 @@ Route::get('password/reset/{token?}', ['as' => 'auth.password.reset', 'uses' => 
 Route::post('password/email', ['as' => 'auth.password.email', 'uses' => 'Auth\PasswordController@sendResetLinkEmail']);
 Route::post('password/reset', ['as' => 'auth.password.reset', 'uses' => 'Auth\PasswordController@reset']);
 
+Route::get('avatar', ['as'=>'avatar', 'uses'=>'HomeController@avatar']);
+
 Route::group(['prefix'=>'api'], function(){
    Route::resource('users', 'UsersController', ['only'=>'index']);
 });

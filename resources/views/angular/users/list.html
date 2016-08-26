@@ -1,8 +1,8 @@
 <div class="row">
-    <div ng-repeat="item in items" class="col-md-3 col-sm-6 col-xs-6">
+    <div ng-repeat="item in items" class="col-md-3 col-sm-6 col-xs-6" style="margin-bottom: 30px;">
         <div class="text-center">
-            <p><img class="img-circle"
-                    ng-src="//placeimg.com/150/150/people?id={{item.id}}"/></p>
+
+            <p><img class="img-circle" ng-src="{{ 'avatar?id=' + item.id | url }}" style="height: 50px"/></p>
             <p>{{ item.name }}</p>
             {{item.email}}
         </div>
