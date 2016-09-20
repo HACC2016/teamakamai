@@ -1,0 +1,34 @@
+{
+  "name": "telecare.us",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Flaviu<flaviu.chelaru@gmail.com>",
+  "scripts": {
+    "prod": "gulp --production",
+    "dev": "gulp watch",
+    "_update": "git fetch --all & git pull origin master & composer update & npm install -f & bower install -f & gulp default"
+  },
+  "dependencies": {
+    "bower": "^1.7.9",
+    "dotenv": "^2.0.0",
+    "express": "^4.14.0",
+    "fs": "0.0.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-dest": "^0.2.3",
+    "gulp-header": "^1.7.1",
+    "gulp-html2js": "^0.4.2",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-livereload": "^3.8.1",
+    "gulp-reload": "0.0.4",
+    "gulp-sass": "^2.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.4.2",
+    "gulp-util": "^3.0.7",
+    "laravel-elixir": "^5.0.0",
+    "mysql": "^2.11.1",
+    "socket.io": "^1.4.8"
+  }
+}

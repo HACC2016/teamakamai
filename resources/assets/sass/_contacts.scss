@@ -1,0 +1,50 @@
+.contacts{
+  margin: 0 -5px 10px;
+  width: 100%;
+  transition: all 0.3s linear;
+
+  & > .item{
+    display: inline-block;
+    width: unquote((100 / 4) + "%");
+    padding: 0 5px 10px;
+    @media screen and (min-width: 480px) and (max-width: 768px){
+      width: unquote((100 / 2) + "%");
+    }
+
+    @media screen and (max-width: 480px) {
+      width: 100%;
+    }
+  }
+  .card{
+    margin-top: 0px;
+    margin-bottom: 3px;
+    .row{
+      margin-bottom: 0;
+    }
+  }
+
+  .card-title{
+    font-size: 16px;
+    line-height: 18px;
+    span{
+      display: block;
+      font-size: 11px;
+    }
+  }
+  &.active{
+    width: 30%;
+    float: left;
+    height: 450px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    & > .item{
+      width: 100%;
+    }
+
+    @media screen and (max-width: 768px){
+      width: 100%;
+      float: none;
+      margin: 0;
+    }
+  }
+}

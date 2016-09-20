@@ -1,0 +1,33 @@
+.video-container{
+  float: right;
+  margin-left:10px;
+  position: relative;
+  border: dotted 1px #dedede;
+  width: 70%;
+  transition: all 0.3s linear;
+
+  .remote-media{
+    width: 100%;
+  }
+
+  .local-media{
+    position: absolute;
+    bottom: 25px;
+    right: 25px;
+    height: 25%;
+    width: 25%;
+    z-index: 2;
+  }
+
+  &.hidden{
+    display: none;
+  }
+
+
+  @media screen and (max-width: 768px){
+    width: 100%;
+    float: none;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+}

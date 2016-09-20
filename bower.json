@@ -1,0 +1,32 @@
+{
+  "name": "telecare.us",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Flaviu<flaviu.chelaru@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#^1.5.7",
+    "url-to": "^0.1.1",
+    "angular-ui-router": "^0.3.1",
+    "angular-restmod": "^1.1.11",
+    "lodash": "^4.13.1",
+    "cookies-js": "^1.2.2",
+    "twilio-conversations": "^0.13.8",
+    "twilio-common": "^0.1.5",
+    "materialize": "^0.97.7",
+    "font-awesome": "https://github.com/FortAwesome/Font-Awesome.git#^4.6.3",
+    "angular-sanitize": "^1.5.8",
+    "angular-animate": "^1.5.8"
+  }
+}
