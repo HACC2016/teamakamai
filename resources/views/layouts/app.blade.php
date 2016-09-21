@@ -14,7 +14,7 @@
 <nav ng-class="{visible: !$state.current.hideFooter}" class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" ui-sref="home" href="#" class="brand-logo">TEAM AKAMAI</a>
         <ul class="right hide-on-med-and-down">
-            <li><a class="hide waves-effect waves-light" ui-sref="account:login">Login</a></li>
+            <li><a class="waves-effect waves-light" ui-sref="contact">Contact</a></li>
             <li><a class=" waves-effect waves-light" ui-sref="account:logout">Logout</a></li>
         </ul>
         <ul id="nav-mobile" class="side-nav">

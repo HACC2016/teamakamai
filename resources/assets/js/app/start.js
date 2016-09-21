@@ -65,8 +65,14 @@ angular.module("app", [
             guestFilter: true
         });
 
+        $stateProvider.state('contact',{
+            url:'/contact',
+            template: 'Contact'
+        });
+
     })
-    .run(function ($rootScope, $state, $stateParams, URLTo, AuthFilter, GuestFilter, APP) {
+    .run(function ($rootScope, $state, $stateParams, URLTo,
+                   AuthFilter, GuestFilter,TwilioFilter, APP) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -77,4 +83,5 @@ angular.module("app", [
         // Setup route filters
         $rootScope.$on("$stateChangeStart", AuthFilter);
         $rootScope.$on("$stateChangeStart", GuestFilter);
+        $rootScope.$on("$stateChangeStart", TwilioFilter);
     });
