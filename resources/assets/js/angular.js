@@ -27,7 +27,7 @@ $templateCache.put("users/views/list.html","<div class=\"video-container\" ng-cl
     "                <img ng-src=\"{{item.avatar}}\" alt=\"{{item.name}}\" />\n" +
     "            </div>\n" +
     "            <div class=\"card-action center-align teal\">\n" +
-    "                <a class=\"btn-floating waves-effect waves-light green\" ng-disabled=\"!item.isActive\"><i class=\"fa fa-phone\"></i></a>\n" +
+    "                <a class=\"btn-floating waves-effect waves-light green\" ng-click=\"item.isActive ? call(item.client_token) : ''\" ng-disabled=\"!item.isActive\"><i class=\"fa fa-phone\" aria-hidden=\"true\"></i></a>\n" +
     "                <div class=\"white-text\">{{item.name}}</div>\n" +
     "            </div>\n" +
     "        </div>\n" +
