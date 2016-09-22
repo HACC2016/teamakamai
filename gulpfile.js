@@ -106,11 +106,7 @@ gulp.task('watch', function () {
     gulp.watch(JS_SCRIPTS, ['js:dev']);
     gulp.watch(['resources/assets/sass/*.scss', 'resources/assets/sass/**/*.scss'], ['sass:dev']);
 
-    livereload.listen({
-        port: 9000,
-        basePath:'public/assets',
-        start:true
-    });
+    livereload.listen();
 
     gulp.watch('public/assets/css/app.css').on('change', livereload.changed);
     gulp.watch('public/assets/js/vendor.js').on('change', livereload.changed);
