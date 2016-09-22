@@ -27,7 +27,6 @@ angular.module('users').directive('usersList', function ($window, $rootScope, Us
 
             socket.on('users:list', function (users) {
                 activeUsers = users;
-                console.log(users);
                 for(var i in scope.items){
                     scope.items[i].client_token = '';
                     scope.items[i].isActive = false;
