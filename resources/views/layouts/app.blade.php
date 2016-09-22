@@ -7,14 +7,13 @@
           content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="HandheldFriendly" content="true">
 
-    <title ng-bind="$state.current.title" class="ng-binding">TEAM AKAMAI</title>
+    <title ng-bind="$state.current.title" class="ng-binding">Team Akamai</title>
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
 </head>
 <body>
 <div class="body">
     <nav ng-class="{visible: !$state.current.hideFooter}" class="light-blue lighten-1" role="navigation">
-        <div class="nav-wrapper container"><a id="logo-container" ui-sref="home" href="#" class="brand-logo">TEAM
-                AKAMAI</a>
+        <div class="nav-wrapper container"><a id="logo-container" ui-sref="home" href="#" class="brand-logo">Team Akamai</a>
             <ul class="right hide-on-med-and-down">
                 <li><a class="hide waves-effect waves-light" ui-sref="account:login">Login</a></li>
                 <li><a class=" waves-effect waves-light" ui-sref="account:logout">Logout</a></li>
@@ -22,7 +21,7 @@
             <ul id="nav-mobile" class="side-nav">
                 <li>
                     <div class="userView">
-                        Team AKAMAI
+                        Team Akamai
                     </div>
                 </li>
                 <li>
@@ -46,7 +45,7 @@
 <footer ng-class="{visible: !$state.current.hideFooter}" class="page-footer orange ">
     <div class="footer-copyright">
         <div class="container">
-            Made by <a class="orange-text text-lighten-3" href="https://dev.teamakamai.com">TEAM AKAMAI</a>
+            Made by <a class="orange-text text-lighten-3" href="https://dev.teamakamai.com">Team Akamai</a>
         </div>
     </div>
 </footer>

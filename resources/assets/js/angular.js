@@ -22,17 +22,13 @@ $templateCache.put("users/views/list.html","<div class=\"video-container\" ng-cl
     "<div class=\"contacts\" ng-class=\"{active: inACall}\">\n" +
     "    <input type=\"search\" ng-model=\"search\" placeholder=\"Filter\" />\n" +
     "    <div ng-repeat=\"item in items|orderBy:'-isActive'|filter:search\" class=\"item\" >\n" +
-    "        <div class=\"card\">\n" +
-    "            <div class=\"card-content row\">\n" +
-    "                <div class=\"col s3\">\n" +
-    "                    <img ng-src=\"{{item.avatar}}\" style=\"max-height: 40px;\" class=\"responsive-img\" />\n" +
-    "                </div>\n" +
-    "                <div class=\"col s9\">\n" +
-    "                    <div class=\"card-title left\">\n" +
-    "                        {{item.name}}\n" +
-    "                    </div>\n" +
-    "                    <a ng-class=\"{hide: !item.isActive}\" ng-click=\"call(item.client_token)\" class=\"right\" href=\"#\" ><i class=\"fa fa-phone fa-3x\" ></i></a>\n" +
-    "                </div>\n" +
+    "        <div class=\"card \">\n" +
+    "            <div class=\"card-image\">\n" +
+    "                <img ng-src=\"{{item.avatar}}\" alt=\"{{item.name}}\" />\n" +
+    "            </div>\n" +
+    "            <div class=\"card-action center-align teal\">\n" +
+    "                <a class=\"btn-floating waves-effect waves-light green\" ng-disabled=\"!item.isActive\"><i class=\"fa fa-phone\"></i></a>\n" +
+    "                <div class=\"white-text\">{{item.name}}</div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -43,7 +39,7 @@ $templateCache.put("account/views/auth/login.html","<div class=\"container\">\n"
     "    <div class=\"row\">\n" +
     "        <div class=\"col m6 offset-m3\">\n" +
     "\n" +
-    "            <h3 class=\"center-align orange-text\">TEAM AKAMAI</h3>\n" +
+    "            <h3 class=\"center-align orange-text\">Team Akamai</h3>\n" +
     "            <div class=\"z-depth-1 grey lighten-4 row\" style=\" padding: 32px 48px 0px 48px; border: 1px solid #EEE;\">\n" +
     "\n" +
     "                <form ng-submit=\"login(submitData)\" class=\"col s12 4\" method=\"post\">\n" +
@@ -86,7 +82,7 @@ $templateCache.put("account/views/auth/recover.html","<div class=\"container\">\
     "    <div class=\"row\">\n" +
     "        <div class=\"col m6 offset-m3\">\n" +
     "\n" +
-    "            <h3 class=\"center-align orange-text\">TEAM AKAMAI</h3>\n" +
+    "            <h3 class=\"center-align orange-text\">Team Akamai</h3>\n" +
     "            <div class=\"z-depth-1 grey lighten-4 row\" style=\" padding: 32px 48px 0px 48px; border: 1px solid #EEE;\">\n" +
     "\n" +
     "                <form ng-submit=\"requestPasswordReset(submitData)\" class=\"col s12 4\" method=\"post\">\n" +
@@ -118,7 +114,7 @@ $templateCache.put("account/views/auth/reset.html","<div class=\"container\">\n"
     "    <div class=\"row\">\n" +
     "        <div class=\"col m6 offset-m3\">\n" +
     "\n" +
-    "            <h3 class=\"center-align orange-text\">TEAM AKAMAI</h3>\n" +
+    "            <h3 class=\"center-align orange-text\">Team Akamai</h3>\n" +
     "            <div class=\"z-depth-1 grey lighten-4 row\" style=\" padding: 32px 48px 0px 48px; border: 1px solid #EEE;\">\n" +
     "\n" +
     "                <form ng-submit=\"passwordReset(submitData)\" class=\"col s12 4\" method=\"post\">\n" +
@@ -157,7 +153,7 @@ $templateCache.put("account/views/auth/reset.html","<div class=\"container\">\n"
 $templateCache.put("account/views/auth/signup.html","<div class=\"container\">\n" +
     "    <div class=\"row\">\n" +
     "        <div class=\"col m6 offset-m3\">\n" +
-    "            <h3 class=\"center-align orange-text\">TEAM AKAMAI</h3>\n" +
+    "            <h3 class=\"center-align orange-text\">Team Akamai</h3>\n" +
     "            <div class=\"z-depth-1 grey lighten-4 row\" style=\" padding: 32px 48px 0px 48px; border: 1px solid #EEE;\">\n" +
     "\n" +
     "                <form ng-submit=\"register(signupData)\" class=\"col s12\" method=\"post\">\n" +
