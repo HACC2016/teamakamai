@@ -3,32 +3,38 @@
   width: 100%;
   transition: all 0.3s linear;
 
-  & > .item{
+  & > .item {
     display: inline-block;
     width: unquote((100 / 4) + "%");
     padding: 0 5px 10px;
-    @media screen and (min-width: 480px) and (max-width: 768px){
+    @media screen and (min-width: 480px) and (max-width: 768px) {
       width: unquote((100 / 2) + "%");
     }
 
     @media screen and (max-width: 480px) {
       width: 100%;
     }
-  }
-  .card{
-    margin-top: 0px;
-    margin-bottom: 3px;
-    .row{
-      margin-bottom: 0;
-    }
-  }
-
-  .card-title{
-    font-size: 16px;
-    line-height: 18px;
-    span{
-      display: block;
-      font-size: 11px;
+    .card{
+      .card-image{
+        text-align: center;
+        img{
+          max-height: 120px;
+          width: auto;
+          display: inline-block;
+        }
+      }
+      .card-action{
+        padding: 10px;
+        position:relative;
+        .btn-floating{
+          position: absolute;
+          top: -20px;
+          right: 20px;
+          i{
+            font-size: 10px;
+          }
+        }
+      }
     }
   }
   &.active{

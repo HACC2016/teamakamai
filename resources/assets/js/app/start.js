@@ -16,14 +16,14 @@ angular.module("app", [
             url: '/',
             templateUrl: "app/views/home.html",
             controller: "HomeCtrl",
-            title: 'Welcome | TEAM AKAMAI',
+            title: 'Welcome | Team Akamai',
             authFilter: true
         });
         $stateProvider.state('account:login', {
             url: '/login',
             templateUrl: 'account/views/auth/login.html',
             controller: 'LoginCtrl',
-            title: 'Login | TEAM AKAMAI',
+            title: 'Login | Team Akamai',
             hideHeader: 1,
             hideFooter: 1,
             guestFilter: true
@@ -33,7 +33,7 @@ angular.module("app", [
             url: '/register',
             templateUrl: 'account/views/auth/signup.html',
             controller: 'SignupCtrl',
-            title: 'Register | TEAM AKAMAI',
+            title: 'Register | Team Akamai',
             hideHeader: 1,
             hideFooter: 1,
             guestFilter: true
@@ -49,7 +49,7 @@ angular.module("app", [
             url: '/account/forgot-password',
             templateUrl: 'account/views/auth/recover.html',
             controller: 'ForgotPasswordCtrl',
-            title: 'Forgot password | TEAM AKAMAI',
+            title: 'Forgot password | Team Akamai',
             hideHeader: 1,
             hideFooter: 1,
             guestFilter: true
@@ -59,7 +59,7 @@ angular.module("app", [
             url: '/account/reset-password/{token}',
             templateUrl: 'account/views/auth/reset.html',
             controller: 'ResetPasswordCtrl',
-            title: 'Reset password | TEAM AKAMAI',
+            title: 'Reset password | Team Akamai',
             hideHeader: 1,
             hideFooter: 1,
             guestFilter: true

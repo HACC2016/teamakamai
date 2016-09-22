@@ -6,17 +6,13 @@
 <div class="contacts" ng-class="{active: inACall}">
     <input type="search" ng-model="search" placeholder="Filter" />
     <div ng-repeat="item in items|orderBy:'-isActive'|filter:search" class="item" >
-        <div class="card">
-            <div class="card-content row">
-                <div class="col s3">
-                    <img ng-src="{{item.avatar}}" style="max-height: 40px;" class="responsive-img" />
-                </div>
-                <div class="col s9">
-                    <div class="card-title left">
-                        {{item.name}}
-                    </div>
-                    <a ng-class="{hide: !item.isActive}" ng-click="call(item.client_token)" class="right" href="#" ><i class="fa fa-phone fa-3x" ></i></a>
-                </div>
+        <div class="card ">
+            <div class="card-image">
+                <img ng-src="{{item.avatar}}" alt="{{item.name}}" />
+            </div>
+            <div class="card-action center-align teal">
+                <a class="btn-floating waves-effect waves-light green" ng-click="item.isActive ? call(item.client_token) : ''" ng-disabled="!item.isActive"><i class="fa fa-phone" aria-hidden="true"></i></a>
+                <div class="white-text">{{item.name}}</div>
             </div>
         </div>
     </div>
