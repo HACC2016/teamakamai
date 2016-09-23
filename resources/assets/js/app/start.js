@@ -1,5 +1,5 @@
 angular.module("app", [
-    "ngAnimate", "ui.router",
+    "ngAnimate", "ui.router", 'angular-plupload',
     "account", "common", "twilio", "users"
 ])
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, $uiViewScrollProvider) {
@@ -63,6 +63,14 @@ angular.module("app", [
             hideHeader: 1,
             hideFooter: 1,
             guestFilter: true
+        });
+
+        $stateProvider.state('account:profile', {
+            url: '/account/profile',
+            templateUrl: 'account/views/profile.html',
+            controller: 'ProfileCtrl',
+            title: 'Profile | Team Akamai',
+            authFilter: true
         });
 
     })

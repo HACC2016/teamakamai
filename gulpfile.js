@@ -33,11 +33,13 @@ var JS         = [
     "bower_components/angular-inflector/dist/angular-inflector.js",
     "bower_components/angular-restmod/dist/angular-restmod.js",
     'bower_components/angular-animate/angular-animate.js',
+    'bower_components/plupload/js/plupload.full.min.js',
+    'bower_components/angular-plupload/dist/angular-plupload.min.js',
     "bower_components/angular-sanitize/angular-sanitize.js"
 
 ];
 var JS_SCRIPTS = [
-    'resources/assets/js/angular.js',
+    'resources/assets/js/html.js',
     'resources/assets/js/common/init.js',
     'resources/assets/js/common/**/*.js',
     'resources/assets/js/app/start.js',
@@ -52,7 +54,7 @@ var JS_SCRIPTS = [
 
 gulp.task('html2js', function () {
     return gulp.src(['resources/assets/js/**/views/*.html', 'resources/assets/js/**/views/**/*.html'])
-        .pipe(html2js('angular.js', {
+        .pipe(html2js('html.js', {
             base: 'resources/assets/js',
             name: 'html'
         }))

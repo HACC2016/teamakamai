@@ -192,3 +192,4 @@ public/assets/js
 .vagrant/
 public/devTelecare.tar
 public/phpmyadmin
+/public/avatars/*.*

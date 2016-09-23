@@ -17,6 +17,8 @@ angular.module("account")
         login: "auth/signin",
         logout: "auth/signout",
         register: "auth/signup",
+        updateProfile: "profile",
+        updateAvatar: "profile/avatar",
         requestPasswordReset: "auth/recover-password",
         resetPassword: "auth/reset-password/token"
     })

@@ -14,6 +14,78 @@ $templateCache.put("app/views/home.html","<div class=\"section no-pad-bot\" id=\
     "    <div users-list></div>\n" +
     "</div>")
 
+$templateCache.put("account/views/profile.html","<div class=\"container\">\n" +
+    "    <h1>Profile</h1>\n" +
+    "\n" +
+    "    <div class=\"card light-blue lighten-5\" ng-class=\"{hide: !success}\">\n" +
+    "        <div class=\"card-content light-blue-text\">\n" +
+    "            <p><strong>Success</strong> : Your profile got updated.</p>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"card red\" ng-class=\"{hide: !errors}\">\n" +
+    "        <div class=\"card-content white-text\">\n" +
+    "            <p><strong>DANGER</strong> : Fix the errors before continue</p>\n" +
+    "            <div ng-repeat=\"item in errors\">{{ item[0] }}</div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <br/>\n" +
+    "\n" +
+    "    <form ng-submit=\"changeProfile(data);\">\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"col m3 center-align\">\n" +
+    "                <img style=\"border: solid 1px #dedede; padding: 2px;\"\n" +
+    "                     ng-src=\"{{data.avatar ? data.avatar : '//placehold.it/150x150'}}\"\n" +
+    "                     alt=\"{{data.first_name}} {{data.last_name}}\" class=\"circle responsive-img\">\n" +
+    "\n" +
+    "                <a class=\"btn\" plupload=\"fileUpload.url\"\n" +
+    "                   plupload-options=\"fileUpload.options\"\n" +
+    "                   plupload-callbacks=\"fileUpload.callbacks\" > Change </a>\n" +
+    "\n" +
+    "            </div>\n" +
+    "            <div class=\"col m9\">\n" +
+    "                <div class=\"row\">\n" +
+    "                    <div class=\"input-field col s6\">\n" +
+    "                        <input ng-model=\"data.first_name\" id=\"first_name\" type=\"text\"/>\n" +
+    "                        <label for=\"first_name\">First Name</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"input-field col s6\">\n" +
+    "                        <input id=\"last_name\" ng-model=\"data.last_name\" type=\"text\"/>\n" +
+    "                        <label for=\"last_name\">Last Name</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <div class=\"input-field  \">\n" +
+    "                    <input autocomplete=\"off\" ng-model=\"data.email\" id=\"email\" type=\"text\"/>\n" +
+    "                    <label for=\"email\">E-mail</label>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <div class=\"row\">\n" +
+    "                    <div class=\"input-field col s6\">\n" +
+    "                        <input autocomplete=\"off\" ng-model=\"data.password\" id=\"password\" type=\"password\"/>\n" +
+    "                        <label for=\"password\">Password</label>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"input-field col s6\">\n" +
+    "                        <input autocomplete=\"off\" ng-model=\"password_confirmation\" id=\"password_confirmation\"\n" +
+    "                               type=\"password\"/>\n" +
+    "                        <label for=\"password_confirmation\">Password confirmation</label>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "\n" +
+    "                <div class=\"center-align\">\n" +
+    "                    <button class=\"btn waves-effect waves-light\" type=\"submit\">\n" +
+    "                        Save profile\n" +
+    "                    </button>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </form>\n" +
+    "</div>")
+
 $templateCache.put("users/views/list.html","<div class=\"video-container\" ng-class=\"{hidden: !inACall}\">\n" +
     "    <div ng-show=\"!hidePreview\" class=\"card local-media\"></div>\n" +
     "    <div class=\"card card-content remote-media\">\n" +

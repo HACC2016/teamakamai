@@ -13,6 +13,8 @@ Route::group(['prefix' => 'api'], function () {
     Route::post('auth/reset-password/{token}', 'Auth\PasswordController@reset');
 
     Route::get('users', 'UsersController@index');
+    Route::post('profile', 'UsersController@updateProfile');
+    Route::post('profile/avatar', 'UsersController@updateAvatar');
 
     Route::get('users/token/{identity}','UsersController@token');
 });

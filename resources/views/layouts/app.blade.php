@@ -10,12 +10,14 @@
     <title ng-bind="$state.current.title" class="ng-binding">Team Akamai</title>
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet">
 </head>
+
 <body>
 <div class="body">
     <nav ng-class="{visible: !$state.current.hideFooter}" class="light-blue lighten-1" role="navigation">
         <div class="nav-wrapper container"><a id="logo-container" ui-sref="home" href="#" class="brand-logo">Team Akamai</a>
             <ul class="right hide-on-med-and-down">
                 <li><a class="hide waves-effect waves-light" ui-sref="account:login">Login</a></li>
+                <li><a class="waves-effect waves-light" ui-sref="account:profile">Profile</a></li>
                 <li><a class=" waves-effect waves-light" ui-sref="account:logout">Logout</a></li>
             </ul>
             <ul id="nav-mobile" class="side-nav">
@@ -27,6 +29,7 @@
                 <li>
                     <div class="divider"></div>
                 </li>
+                <li><a ui-sref="account:profile" href="#">Profile</a></li>
                 <li><a ui-sref="account:logout" href="#">Logout</a></li>
             </ul>
             <a href="#" sidenav data-activates="nav-mobile" class="button-collapse"><i class="fa fa-list"></i></a>

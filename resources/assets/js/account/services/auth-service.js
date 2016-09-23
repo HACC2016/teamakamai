@@ -156,4 +156,13 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
     {
         return $http.get(URLTo.api(AUTH_URLS.resetPassword, {token: $token}));
     };
+
+    this.updateProfile = function($data){
+        var promise = $http.post(URLTo.api(AUTH_URLS.updateProfile), $data);
+        promise.then(function(response){
+            return response.data;
+        })
+
+        return promise;
+    }
 });
