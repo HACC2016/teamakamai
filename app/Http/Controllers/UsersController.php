@@ -59,14 +59,15 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'result' => false,
-                'errors' => $validator->messages()->toArray()
+                'errors' => array_values($validator->messages()->toArray())
             ], 400);
         }
-        if($input['password'])
-            $input['password'] = Hash::make($input['password']);
 
-        $request->user()->fill($input);
-        $request->user()->save();
+        if($input['password'])
+            $input['password'] = \Hash::make($input['password']);
+
+        //$request->user()->fill($input);
+        $request->user()->update(empty($request->get('password')) ? $request->except('password') : $input);
 
         return response()->json([
             'token' => JWTAuth::fromUser($request->user()),
@@ -89,7 +90,6 @@ class UsersController extends Controller
         }
 
 
-
         if($user->avatar){
             File::delete(public_path('avatars/' . $user->avatar));
         }
@@ -99,8 +99,9 @@ class UsersController extends Controller
 
         $file->move(public_path('avatars'), $filename);
 
-        $user->avatar = $filename;
-        $user->save();
+        $user->update([
+            'avatar' => $filename
+        ]);
 
         return response()->json($user->toArray());
 

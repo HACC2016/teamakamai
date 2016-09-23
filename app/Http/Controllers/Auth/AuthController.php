@@ -48,11 +48,11 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        $input = $request->only(['email', 'password', 'first_name', 'last_name', 'password_confirmation']);
+        $input = $request->only(['email', 'password', 'name', 'password_confirmation']);
 
         $validator = \Validator::make($input, array(
-            'first_name'            => 'required',
-            'last_name'             => 'required',
+            'first_name'                  => 'required',
+            'last'                  => 'required',
             'email'                 => 'required|email|unique:users',
             'password'              => 'required|min:3|max:25',
             'password_confirmation' => 'required_with:password|same:password',
@@ -71,8 +71,8 @@ class AuthController extends Controller
         $user = User::create($input);
 
         return response()->json([
-            'token' => JWTAuth::fromUser($user),
-            'user'  => $user->toArray()
+            'token'  => JWTAuth::fromUser($user),
+            'user'   => $user->toArray()
         ]);
     }
 

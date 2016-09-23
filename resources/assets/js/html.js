@@ -58,7 +58,7 @@ $templateCache.put("account/views/profile.html","<div class=\"container\">\n" +
     "                        <label for=\"password\">Password</label>\n" +
     "                    </div>\n" +
     "                    <div class=\"input-field col s6\">\n" +
-    "                        <input autocomplete=\"off\" ng-model=\"password_confirmation\" id=\"password_confirmation\"\n" +
+    "                        <input autocomplete=\"off\" ng-model=\"data.password_confirmation\" id=\"password_confirmation\"\n" +
     "                               type=\"password\"/>\n" +
     "                        <label for=\"password_confirmation\">Password confirmation</label>\n" +
     "                    </div>\n" +

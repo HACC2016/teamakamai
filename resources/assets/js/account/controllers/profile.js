@@ -2,8 +2,7 @@ angular.module('account').controller('ProfileCtrl',
     function ($scope, AuthService, $timeout, SessionService, AUTH_URLS, URLTo) {
 
         $scope.data = AuthService.getProfile();
-        $scope.data.password = '';
-        $scope.data.password_confirmation = '';
+
         $scope.success = false;
         $scope.fileUpload = {
             url: URLTo.api(AUTH_URLS.updateAvatar),
