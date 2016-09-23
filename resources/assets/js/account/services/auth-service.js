@@ -49,7 +49,8 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
     this.signup = function (data) {
         var AuthService = this;
         var promise = $http.post(URLTo.api(AUTH_URLS.register), {
-            name: data.firstname + ' ' + data.lastname,
+            first_name: data.first_name,
+            last_name: data.last_name,
             email: data.email,
             password: data.password,
             password_confirmation: data.password_confirmation,

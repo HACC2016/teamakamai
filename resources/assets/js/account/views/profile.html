@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div class="card red" ng-class="{hide: !errors}">
+    <div class="card red" ng-class="{hide: !errors.length}">
         <div class="card-content white-text">
             <p><strong>DANGER</strong> : Fix the errors before continue</p>
             <div ng-repeat="item in errors">{{ item[0] }}</div>
@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col m3 center-align">
                 <img style="border: solid 1px #dedede; padding: 2px;"
-                     ng-src="{{data.avatar ? data.avatar : '//placehold.it/150x150'}}"
+                     ng-src="{{data.avatar ? 'avatars/' + data.avatar : '//placehold.it/150x150'}}"
                      alt="{{data.first_name}} {{data.last_name}}" class="circle responsive-img">
 
                 <a class="btn" plupload="fileUpload.url"

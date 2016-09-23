@@ -8,11 +8,11 @@
     <div ng-repeat="item in items|orderBy:'-isActive'|filter:search" class="item" >
         <div class="card ">
             <div class="card-image">
-                <img ng-src="{{item.avatar}}" alt="{{item.name}}" />
+                <img ng-src="{{'avatars/' + item.avatar}}" alt="{{item.name}}" />
             </div>
             <div class="card-action center-align teal">
                 <a class="btn-floating waves-effect waves-light green" ng-click="item.isActive ? call(item.client_token) : ''" ng-disabled="!item.isActive"><i class="fa fa-phone" aria-hidden="true"></i></a>
-                <div class="white-text">{{item.name}}</div>
+                <div class="white-text">{{item.first_name}} {{item.last_name}}</div>
             </div>
         </div>
     </div>

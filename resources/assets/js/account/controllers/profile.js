@@ -27,8 +27,8 @@ angular.module('account').controller('ProfileCtrl',
                 fileUploaded: function (uploader, file, response) {
                     $scope.loading = false;
                     var json = angular.fromJson(response.response);
-                    SessionService.set('avatar', 'avatars/' + json.avatar);
-                    $scope.data.avatar = 'avatars/' + json.avatar;
+                    SessionService.set('avatar',  json.avatar);
+                    $scope.data.avatar =  json.avatar;
                 },
                 error: function (uploader, error) {
                     $scope.loading = false;

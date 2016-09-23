@@ -3,14 +3,8 @@ angular.module('users').service('UserService', function ($http, URLTo) {
         var $this = this;
         return $http.get(URLTo.api('users'))
             .then(function (response) {
-                var data = [];
-
-                for (i in response.data) {
-                    item = response.data[i];
-                    item.avatar = $this.getAvatar();
-                    data.push(item);
-                }
-                return data;
+                console.log(response.data);
+                return response.data;
             });
     };
 

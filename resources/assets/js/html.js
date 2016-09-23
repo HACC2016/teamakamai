@@ -5,15 +5,6 @@ catch(err) { app = angular.module("html", []); }
 app.run(["$templateCache", function($templateCache) {
 "use strict";
 
-$templateCache.put("app/views/home.html","<div class=\"section no-pad-bot\" id=\"index-banner\">\n" +
-    "    <div class=\"container\">\n" +
-    "        <h2 class=\"header orange-text\">Contacts</h2>\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "<div class=\"container\">\n" +
-    "    <div users-list></div>\n" +
-    "</div>")
-
 $templateCache.put("account/views/profile.html","<div class=\"container\">\n" +
     "    <h1>Profile</h1>\n" +
     "\n" +
@@ -23,7 +14,7 @@ $templateCache.put("account/views/profile.html","<div class=\"container\">\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"card red\" ng-class=\"{hide: !errors}\">\n" +
+    "    <div class=\"card red\" ng-class=\"{hide: !errors.length}\">\n" +
     "        <div class=\"card-content white-text\">\n" +
     "            <p><strong>DANGER</strong> : Fix the errors before continue</p>\n" +
     "            <div ng-repeat=\"item in errors\">{{ item[0] }}</div>\n" +
@@ -36,7 +27,7 @@ $templateCache.put("account/views/profile.html","<div class=\"container\">\n" +
     "        <div class=\"row\">\n" +
     "            <div class=\"col m3 center-align\">\n" +
     "                <img style=\"border: solid 1px #dedede; padding: 2px;\"\n" +
-    "                     ng-src=\"{{data.avatar ? data.avatar : '//placehold.it/150x150'}}\"\n" +
+    "                     ng-src=\"{{data.avatar ? 'avatars/' + data.avatar : '//placehold.it/150x150'}}\"\n" +
     "                     alt=\"{{data.first_name}} {{data.last_name}}\" class=\"circle responsive-img\">\n" +
     "\n" +
     "                <a class=\"btn\" plupload=\"fileUpload.url\"\n" +
@@ -86,6 +77,15 @@ $templateCache.put("account/views/profile.html","<div class=\"container\">\n" +
     "    </form>\n" +
     "</div>")
 
+$templateCache.put("app/views/home.html","<div class=\"section no-pad-bot\" id=\"index-banner\">\n" +
+    "    <div class=\"container\">\n" +
+    "        <h2 class=\"header orange-text\">Contacts</h2>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"container\">\n" +
+    "    <div users-list></div>\n" +
+    "</div>")
+
 $templateCache.put("users/views/list.html","<div class=\"video-container\" ng-class=\"{hidden: !inACall}\">\n" +
     "    <div ng-show=\"!hidePreview\" class=\"card local-media\"></div>\n" +
     "    <div class=\"card card-content remote-media\">\n" +
@@ -96,11 +96,11 @@ $templateCache.put("users/views/list.html","<div class=\"video-container\" ng-cl
     "    <div ng-repeat=\"item in items|orderBy:'-isActive'|filter:search\" class=\"item\" >\n" +
     "        <div class=\"card \">\n" +
     "            <div class=\"card-image\">\n" +
-    "                <img ng-src=\"{{item.avatar}}\" alt=\"{{item.name}}\" />\n" +
+    "                <img ng-src=\"{{'avatars/' + item.avatar}}\" alt=\"{{item.name}}\" />\n" +
     "            </div>\n" +
     "            <div class=\"card-action center-align teal\">\n" +
     "                <a class=\"btn-floating waves-effect waves-light green\" ng-click=\"item.isActive ? call(item.client_token) : ''\" ng-disabled=\"!item.isActive\"><i class=\"fa fa-phone\" aria-hidden=\"true\"></i></a>\n" +
-    "                <div class=\"white-text\">{{item.name}}</div>\n" +
+    "                <div class=\"white-text\">{{item.first_name}} {{item.last_name}}</div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -231,11 +231,11 @@ $templateCache.put("account/views/auth/signup.html","<div class=\"container\">\n
     "                <form ng-submit=\"register(signupData)\" class=\"col s12\" method=\"post\">\n" +
     "                    <div class='row'>\n" +
     "                        <div class='input-field col s6'>\n" +
-    "                            <input ng-model=\"signupData.firstname\" class='validate' type='text' name='firstname' id='firstname'/>\n" +
+    "                            <input ng-model=\"signupData.first_name\" class='validate' type='text' name='firstname' id='firstname'/>\n" +
     "                            <label for='firstname'>Firstname</label>\n" +
     "                        </div>\n" +
     "                        <div class='input-field col s6'>\n" +
-    "                            <input ng-model=\"signupData.lastname\" class='validate' type='text' name='lastname' id='lastname'/>\n" +
+    "                            <input ng-model=\"signupData.last_name\" class='validate' type='text' name='lastname' id='lastname'/>\n" +
     "                            <label for='lastname'>Lastname</label>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
