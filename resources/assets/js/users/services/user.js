@@ -3,7 +3,6 @@ angular.module('users').service('UserService', function ($http, URLTo) {
         var $this = this;
         return $http.get(URLTo.api('users'))
             .then(function (response) {
-                console.log(response.data);
                 return response.data;
             });
     };
