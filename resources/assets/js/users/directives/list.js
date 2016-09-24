@@ -46,7 +46,7 @@ angular.module('users').directive('usersList', function ($window, $rootScope, Us
                     data[i].client_token = '';
                     data[i].isActive = false;
 
-                    for(j in activeUsers){
+                    for(var j in activeUsers){
                         if(activeUsers[j]['id'] == data[i]['id']){
                             data[i]['client_token'] = activeUsers[j]['client_token'];
                             data[i].isActive = true;

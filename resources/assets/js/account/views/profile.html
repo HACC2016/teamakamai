@@ -32,33 +32,30 @@
                 <div class="row">
                     <div class="input-field col s6">
                         <input ng-model="data.first_name" id="first_name" type="text"/>
-                        <label for="first_name">First Name</label>
+                        <label ng-class="{active:!!data.first_name}" for="first_name">First Name</label>
                     </div>
                     <div class="input-field col s6">
                         <input id="last_name" ng-model="data.last_name" type="text"/>
-                        <label for="last_name">Last Name</label>
+                        <label ng-class="{active:!!data.last_name}" for="last_name">Last Name</label>
                     </div>
                 </div>
 
                 <div class="input-field  ">
                     <input autocomplete="off" ng-model="data.email" id="email" type="text"/>
-                    <label for="email">E-mail</label>
+                    <label ng-class="{active:!!data.email}" for="email">E-mail</label>
                 </div>
 
                 <div class="row">
                     <div class="input-field col s6">
                         <input autocomplete="off" ng-model="data.password" id="password" type="password"/>
-                        <label for="password">Password</label>
+                        <label ng-class="{active:!!data.password}" for="password">Password</label>
                     </div>
                     <div class="input-field col s6">
                         <input autocomplete="off" ng-model="data.password_confirmation" id="password_confirmation"
                                type="password"/>
-                        <label for="password_confirmation">Password confirmation</label>
+                        <label ng-class="{active:!!data.password_confirmation}" for="password_confirmation">Password confirmation</label>
                     </div>
                 </div>
-
-
-
 
                 <div class="center-align">
                     <button class="btn waves-effect waves-light" type="submit">

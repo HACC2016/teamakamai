@@ -9,17 +9,17 @@
 
                     <div class='input-field'>
                         <input ng-model="submitData.email" type='email' name='email' id='email'/>
-                        <label for='email'>Enter your e-mail</label>
+                        <label ng-class="{active:!!submitData.email}" for='email'>Enter your e-mail</label>
                     </div>
 
                     <div class='input-field'>
                         <input ng-model="submitData.password" type='password' name='password' id='password'/>
-                        <label for='password'>Enter your new password</label>
+                        <label ng-class="{active:!!submitData.password}" for='password'>Enter your new password</label>
                     </div>
 
                     <div class='input-field'>
                         <input ng-model="submitData.password_confirmation" type='password' name='password_confirmation' id='password_confirmation'/>
-                        <label for='password_confirmation'>Confirm your password</label>
+                        <label ng-class="{active:!!submitData.password_confirmation}" for='password_confirmation'>Confirm your password</label>
                     </div>
 
                     <div class="center-align">
