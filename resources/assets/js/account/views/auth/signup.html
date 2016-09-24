@@ -4,7 +4,7 @@
             <h3 class="center-align orange-text">Team Akamai</h3>
 
 
-            <div class="card red" ng-class="{hide: !errors.length}">
+            <div class="card red" ng-class="{hide: !hasErrors}">
                 <div class="card-content white-text">
                     <p><strong>DANGER</strong> : Fix the errors before continue</p>
                     <div ng-repeat="item in errors">{{ item[0] }}</div>

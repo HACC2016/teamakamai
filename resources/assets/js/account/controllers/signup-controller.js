@@ -4,6 +4,16 @@ angular.module("account").controller("SignupCtrl", function ($scope, $state, Aut
 
     // Save AUTH_EVENTS on scope
     $scope.authEvents = AUTH_EVENTS;
+
+    // Login data
+    $scope.signupData = {
+        first_name: '',
+        last_name: '',
+        email: "",
+        password: "",
+        password_confirmation: ""
+    };
+
     // Whether credentials are invalid
     $scope.areCredentialsInvalid = false;
 
@@ -14,7 +24,7 @@ angular.module("account").controller("SignupCtrl", function ($scope, $state, Aut
      * @param password
      */
     $scope.register = function (data) {
-
+        $scope.hasErrors = false;
         // Login
         var promise = AuthService.signup(data);
 
@@ -24,8 +34,8 @@ angular.module("account").controller("SignupCtrl", function ($scope, $state, Aut
         });
 
         promise.catch(function ($response) {
-            // Invalid credentials
-            console.log($response)
+            $scope.errors = $response.data.errors;
+            $scope.hasErrors = true;
             $scope.areCredentialsInvalid = true;
         });
     };
