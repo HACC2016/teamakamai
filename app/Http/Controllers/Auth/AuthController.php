@@ -48,7 +48,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        $input = $request->only(['email', 'password', 'name', 'password_confirmation']);
+        $input = $request->only(['email', 'password', 'first_name','last_name', 'password_confirmation']);
 
         $validator = \Validator::make($input, array(
             'first_name'            => 'required',
