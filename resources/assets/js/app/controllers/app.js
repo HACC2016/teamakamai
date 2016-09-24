@@ -6,15 +6,15 @@ angular.module('app').controller('AppController', function ($rootScope, $state, 
     });
 
     $rootScope.$on(AUTH_EVENTS.sessionTimeout, function () {
-        AuthService.logout();
+        $state.go('logout');
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthorized, function () {
-        AuthService.logout();
+        $state.go('logout');
     });
 
     $rootScope.$on(AUTH_EVENTS.notAuthenticated, function () {
-        AuthService.logout();
+        $state.go('logout');
     });
 
     $rootScope.$on(AUTH_EVENTS.loginSuccess, function () {
