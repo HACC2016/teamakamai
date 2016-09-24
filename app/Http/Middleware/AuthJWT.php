@@ -15,6 +15,8 @@ class AuthJWT
     {
         try {
             $user = JWTAuth::parseToken()->authenticate();
+            $token = JWTAuth::refresh(JWTAuth::getToken());
+
         } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
             return response()->json(['error' => 'Token is Invalid'], 403);
         } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
@@ -22,9 +24,12 @@ class AuthJWT
         } catch (JWTException $e) {
             return response()->json(['error' => $e->getMessage()], 403);
         } catch (Exception $e) {
-            return response()->json(['error' => 'Something is wrong'], 403);
+            return response()->json(['error' => $e->getMessage(),], 403);
         }
 
-        return $next($request);
+
+        $response = $next($request);
+        $response->headers->add(['Refresh-Token'=>$token]);
+        return $response;
     }
 }

@@ -5,9 +5,17 @@
   border: dotted 1px #dedede;
   width: 70%;
   transition: all 0.3s linear;
+  &:after{
+    content: '';
+    clear: both;
+    display: block;
+  }
 
   .remote-media{
     width: 100%;
+    & > div{
+      float: left;
+    }
   }
 
   .local-media{

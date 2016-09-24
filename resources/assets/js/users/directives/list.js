@@ -14,9 +14,7 @@ angular.module('users').directive('usersList', function ($window, $rootScope, Us
             });
             $rootScope.$on('twilio:end', function(){
                 scope.inACall = false;
-                if (scope.$root.$$phase != '$apply' && scope.$root.$$phase != '$digest') {
-                    scope.$apply();
-                }
+                scope.$evalAsync();
             });
 
             scope.disconnect = function(){

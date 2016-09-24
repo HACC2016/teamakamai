@@ -23,6 +23,14 @@ angular.module("account").factory("AuthInterceptor", function($rootScope, $q, AU
             return config;
         },
 
+        response: function(response){
+
+            if(response.headers('refresh-token'))
+            {
+                SessionService.setId(response.headers('refresh-token'));
+            }
+            return response;
+        },
 
         /**
          * Response error interceptor.

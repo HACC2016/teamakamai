@@ -61,12 +61,15 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
     // TODO: Move to controller / directive
     $rootScope.$on('twilio:conversation-started', function (ev, conversation) {
         $log.info('[twilio] call started');
-        conversation.localMedia.attach('.local-media');
+        if(angular.element('.local-media').html() == '') conversation.localMedia.attach('.local-media');
     });
 
     // TODO: Move to controller / directive
     $rootScope.$on('twilio:participant-connected', function (ev, participant) {
-        participant.media.attach('.remote-media');
+        angular.element('.remote-media').append('<div class="participant-'+participant.identity+'"></div>');
+        var items = angular.element('.remote-media > div');
+        items.css({width: 100/items.length + '%'});
+        participant.media.attach('.participant-'+participant.identity);
     });
 
     // TODO: Move to controller / directive
@@ -85,12 +88,24 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
         // When a participant disconnects, note in log
         conversation.on('participantDisconnected', function (participant) {
             $log.info('[twilio] participant disconnected');
+            angular.element('.remote-media > .participant-' + participant.identity).remove();
+            var items = angular.element('.remote-media > div');
+            items.css({width: 100/items.length + '%'});
 
-            if(_twilio.activeConversation !== null ){
-                conversation.localMedia.stop();
+            if(!items.length){
+                $rootScope.$emit('twilio:end', conversation);
             }
+        });
+        conversation.on('disconnected', function(){
+           // $log.info('[twilio] disconnect event', arguments)
+        });
 
-            $rootScope.$emit('twilio:end', participant);
+        conversation.on('ended', function (conversation) {
+            $log.info('[twilio] conversation ended');
+            $rootScope.$emit('twilio:end', conversation);
+            conversation.localMedia.stop();
+            conversation.disconnect();
+            _twilio.activeConversation = null;
         });
     });
 
