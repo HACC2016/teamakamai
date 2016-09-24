@@ -72,7 +72,7 @@ gulp.task('vendors', function(){
 });
 
 
-gulp.task('js:dev', function () {
+gulp.task('js:dev', ['html2js'], function () {
 
     gulp.src(JS_SCRIPTS)
         .pipe(sourcemaps.init())
@@ -115,6 +115,6 @@ gulp.task('watch', function () {
     gulp.watch('public/assets/js/main.js').on('change', livereload.changed);
 });
 
-gulp.task('local', ['html2js', 'js:dev', 'sass:dev']);
-gulp.task('default', ['vendors', 'html2js','js:main', 'sass:main']);
+gulp.task('local', ['js:dev', 'sass:dev']);
+gulp.task('default', ['vendors','js:main', 'sass:main']);
 gulp.task('run', ['vendors', 'local', 'watch']);
