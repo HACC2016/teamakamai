@@ -7,7 +7,7 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
     _twilio.client = '';
     _twilio.manager = '';
     _twilio.invite = '';
-    _twilio.activeConversation = '';
+    _twilio.activeConversation = null;
 
     _twilio.init = function ($client_token) {
         if (!$window.navigator.webkitGetUserMedia && !$window.navigator.mozGetUserMedia) {
@@ -22,9 +22,24 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
         });
     };
 
+    _twilio.disconnect = function(){
+
+        if(this.activeConversation === null){
+            $log.info('[twilio] No conversation active - unable to disconnect');
+            return false;
+        }
+        this.activeConversation.localMedia.stop();
+        this.activeConversation.disconnect();
+        this.activeConversation = null;
+        $log.info('[twilio] Conversation closed - manual disconnect');
+
+        return true;
+    };
+
+
     $rootScope.$on('twilio:connected', function(ev,client){
         client.listen().then(function () {
-            $log.info('Twilio listening on channel - ', client.identity);
+            $log.info('[twilio] listening on channel - ', client.identity);
             client.on('invite', function (invite) {
                 $rootScope.$emit('twilio:incoming', invite);
             });
@@ -35,7 +50,7 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
 
     // TODO: Move to controller / directive
     $rootScope.$on('twilio:incoming', function (ev, invite) {
-        $log.info('Incoming');
+        $log.info('[twilio] Incoming from ', invite.from);
         if (!confirm("Do you want to accept the call?")) return false;
 
         invite.accept().then(function (conversation) {
@@ -45,49 +60,48 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
 
     // TODO: Move to controller / directive
     $rootScope.$on('twilio:conversation-started', function (ev, conversation) {
-        $log.info('Twilio started');
+        $log.info('[twilio] call started');
         conversation.localMedia.attach('.local-media');
     });
 
     // TODO: Move to controller / directive
-    $rootScope.$on('twilio:participant-connected', function (ev, conversation) {
-        $log.info('Twilio connected');
-        conversation.media.attach('.remote-media');
+    $rootScope.$on('twilio:participant-connected', function (ev, participant) {
+        participant.media.attach('.remote-media');
     });
 
     // TODO: Move to controller / directive
     $rootScope.$on('twilio:conversation-start', function (ev, conversation) {
         //conversation.localMedia.attach('#local-media');
-        $log.info('Twilio start (attach)');
+        $log.info('[twilio] start (attach)');
         $rootScope.$emit('twilio:conversation-started', conversation);
         Twilio.activeConversation = conversation;
 
         // When a participant joins, draw their video on screen
         conversation.on('participantConnected', function (participant) {
+            $log.info('[twilio] participant connected', participant.identity);
             $rootScope.$emit('twilio:participant-connected', participant);
         });
 
         // When a participant disconnects, note in log
         conversation.on('participantDisconnected', function (participant) {
-            $rootScope.$emit('twilio:participant-disconnected', participant);
-        });
+            $log.info('[twilio] participant disconnected');
 
-        // When the conversation ends, stop capturing local video
-        conversation.on('disconnected', function (conversation) {
-            conversation.localMedia.stop();
-            Twilio.activeConversation = null;
-            $rootScope.$emit('twilio:conversation-disconnected', conversation);
+            if(_twilio.activeConversation !== null ){
+                conversation.localMedia.stop();
+            }
+
+            $rootScope.$emit('twilio:end', participant);
         });
     });
 
     // TODO: Move to controller / directive
     $rootScope.$on('twilio:call', function (ev, inviteTo) {
-        $log.info(Twilio.activeConversation ? 'inviting to conversation' : 'calling ',inviteTo);
+        $log.info('[twilio] ' + (_twilio.activeConversation ? 'inviting to conversation' : 'calling ') ,inviteTo);
 
-        if (Twilio.activeConversation) {
-            Twilio.activeConversation.invite(inviteTo);
+        if (_twilio.activeConversation) {
+            _twilio.activeConversation.invite(inviteTo);
         } else {
-            Twilio.client.inviteToConversation(inviteTo).then(function (conversation) {
+            _twilio.client.inviteToConversation(inviteTo).then(function (conversation) {
                 $rootScope.$emit('twilio:conversation-start', conversation);
             }, function (error) {
                 $log.error('Unable to invite to conversation', error);
@@ -96,8 +110,8 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
     });
 
     $rootScope.$on('twilio:preview', function (ev, target) {
-        var previewMedia = new Twilio.Conversations.LocalMedia();
-        Twilio.Conversations.getUserMedia().then( function (mediaStream) {
+        var previewMedia = new _twilio.Conversations.LocalMedia();
+        _twilio.Conversations.getUserMedia().then( function (mediaStream) {
                 previewMedia.addStream(mediaStream);
                 previewMedia.attach(target || '#local-media');
             },  function (error) { $log.error('Unable to get MEDIA',error); }

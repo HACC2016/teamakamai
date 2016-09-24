@@ -7,14 +7,23 @@ angular.module('users').directive('usersList', function ($window, $rootScope, Us
             scope.search = '';
             scope.hidePreview = false;
             scope.inACall = false;
+
             $rootScope.$on('twilio:participant-connected', function(){
                 scope.inACall = true;
                 scope.$apply();
             });
-            $rootScope.$on('twilio:conversation-disconnected', function(){
+            $rootScope.$on('twilio:end', function(){
                 scope.inACall = false;
-                scope.$apply();
+                if (scope.$root.$$phase != '$apply' && scope.$root.$$phase != '$digest') {
+                    scope.$apply();
+                }
             });
+
+            scope.disconnect = function(){
+                Twilio.disconnect();
+                scope.inACall = false;
+            };
+
             var activeUsers = [];
 
             var socket = SocketIO.init();

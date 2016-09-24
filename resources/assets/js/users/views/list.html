@@ -1,7 +1,12 @@
 <div class="video-container" ng-class="{hidden: !inACall}">
-    <div ng-show="!hidePreview" class="card local-media"></div>
-    <div class="card card-content remote-media">
-    </div>
+    <div class="card local-media"></div>
+    <div class="card card-content remote-media"></div>
+
+    <a ng-click="disconnect()" class="call-control btn-floating red">
+        <i class="fa fa-phone"></i>
+        <span class="sr-only">End call</span>
+    </a>
+
 </div>
 <div class="contacts" ng-class="{active: inACall}">
     <div class="input-field">

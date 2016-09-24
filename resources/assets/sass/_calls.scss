@@ -14,13 +14,20 @@
     position: absolute;
     bottom: 25px;
     right: 25px;
-    height: 25%;
-    width: 25%;
+    height: 15%;
+    width: 15%;
     z-index: 2;
   }
 
   &.hidden{
     display: none;
+  }
+
+  .call-control{
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    z-index: 10;
   }
 
 
