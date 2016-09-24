@@ -226,23 +226,34 @@ $templateCache.put("account/views/auth/signup.html","<div class=\"container\">\n
     "    <div class=\"row\">\n" +
     "        <div class=\"col m6 offset-m3\">\n" +
     "            <h3 class=\"center-align orange-text\">Team Akamai</h3>\n" +
+    "\n" +
+    "\n" +
+    "            <div class=\"card red\" ng-class=\"{hide: !errors.length}\">\n" +
+    "                <div class=\"card-content white-text\">\n" +
+    "                    <p><strong>DANGER</strong> : Fix the errors before continue</p>\n" +
+    "                    <div ng-repeat=\"item in errors\">{{ item[0] }}</div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "\n" +
+    "            <br/>\n" +
+    "\n" +
     "            <div class=\"z-depth-1 grey lighten-4 row\" style=\" padding: 32px 48px 0px 48px; border: 1px solid #EEE;\">\n" +
     "\n" +
     "                <form ng-submit=\"register(signupData)\" class=\"col s12\" method=\"post\">\n" +
     "                    <div class='row'>\n" +
     "                        <div class='input-field col s6'>\n" +
-    "                            <input ng-model=\"signupData.first_name\" class='validate' type='text' name='firstname' id='firstname'/>\n" +
+    "                            <input ng-model=\"signupData.first_name\" class='validate' type='text' id='firstname'/>\n" +
     "                            <label for='firstname'>Firstname</label>\n" +
     "                        </div>\n" +
     "                        <div class='input-field col s6'>\n" +
-    "                            <input ng-model=\"signupData.last_name\" class='validate' type='text' name='lastname' id='lastname'/>\n" +
+    "                            <input ng-model=\"signupData.last_name\" class='validate' type='text' id='lastname'/>\n" +
     "                            <label for='lastname'>Lastname</label>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "\n" +
     "                    <div class='row'>\n" +
     "                        <div class='input-field col s12'>\n" +
-    "                            <input autocomplete=\"off\" ng-model=\"signupData.email\" class='validate' type='email' name='email' id='email'/>\n" +
+    "                            <input autocomplete=\"off\" ng-model=\"signupData.email\" type='email' id='email'/>\n" +
     "                            <label for='email'>Enter your email</label>\n" +
     "                        </div>\n" +
     "                    </div>\n" +

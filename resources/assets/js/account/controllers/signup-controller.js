@@ -4,16 +4,6 @@ angular.module("account").controller("SignupCtrl", function ($scope, $state, Aut
 
     // Save AUTH_EVENTS on scope
     $scope.authEvents = AUTH_EVENTS;
-
-    // Login data
-    $scope.signupData = {
-        firstname: '',
-        lastname: '',
-        email: "",
-        password: "",
-        password_confirmation: ""
-    };
-
     // Whether credentials are invalid
     $scope.areCredentialsInvalid = false;
 
@@ -33,8 +23,9 @@ angular.module("account").controller("SignupCtrl", function ($scope, $state, Aut
             $state.go("home");
         });
 
-        promise.catch(function () {
+        promise.catch(function ($response) {
             // Invalid credentials
+            console.log($response)
             $scope.areCredentialsInvalid = true;
         });
     };

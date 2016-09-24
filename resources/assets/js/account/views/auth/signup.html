@@ -2,23 +2,34 @@
     <div class="row">
         <div class="col m6 offset-m3">
             <h3 class="center-align orange-text">Team Akamai</h3>
+
+
+            <div class="card red" ng-class="{hide: !errors.length}">
+                <div class="card-content white-text">
+                    <p><strong>DANGER</strong> : Fix the errors before continue</p>
+                    <div ng-repeat="item in errors">{{ item[0] }}</div>
+                </div>
+            </div>
+
+            <br/>
+
             <div class="z-depth-1 grey lighten-4 row" style=" padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
 
                 <form ng-submit="register(signupData)" class="col s12" method="post">
                     <div class='row'>
                         <div class='input-field col s6'>
-                            <input ng-model="signupData.first_name" class='validate' type='text' name='firstname' id='firstname'/>
+                            <input ng-model="signupData.first_name" class='validate' type='text' id='firstname'/>
                             <label for='firstname'>Firstname</label>
                         </div>
                         <div class='input-field col s6'>
-                            <input ng-model="signupData.last_name" class='validate' type='text' name='lastname' id='lastname'/>
+                            <input ng-model="signupData.last_name" class='validate' type='text' id='lastname'/>
                             <label for='lastname'>Lastname</label>
                         </div>
                     </div>
 
                     <div class='row'>
                         <div class='input-field col s12'>
-                            <input autocomplete="off" ng-model="signupData.email" class='validate' type='email' name='email' id='email'/>
+                            <input autocomplete="off" ng-model="signupData.email" type='email' id='email'/>
                             <label for='email'>Enter your email</label>
                         </div>
                     </div>
