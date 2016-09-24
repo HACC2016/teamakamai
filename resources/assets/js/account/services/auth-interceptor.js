@@ -27,7 +27,7 @@ angular.module("account").factory("AuthInterceptor", function($rootScope, $q, AU
 
             if(response.headers('refresh-token'))
             {
-                SessionService.setId(response.headers('refresh-token'));
+                //SessionService.setId(response.headers('refresh-token'));
             }
             return response;
         },

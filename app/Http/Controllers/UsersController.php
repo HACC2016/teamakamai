@@ -79,7 +79,7 @@ class UsersController extends Controller
         $user = $request->user();
 
         $validator = \Validator::make($request->only('file'), array(
-            'file' => 'required|image|max:2000',
+            'file' => 'required|image',
         ));
 
         if($validator->fails()){
