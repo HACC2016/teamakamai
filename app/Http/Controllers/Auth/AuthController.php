@@ -2,12 +2,12 @@
 
 namespace telecare\Http\Controllers\Auth;
 
-use JWTAuth, Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\JWTException;
 use \telecare\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use telecare\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * Class AuthController
@@ -48,7 +48,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        $input = $request->only(['email', 'password', 'first_name','last_name', 'password_confirmation']);
+        $input = $request->only(['email', 'password', 'first_name', 'last_name', 'password_confirmation']);
 
         $validator = \Validator::make($input, array(
             'first_name'            => 'required',
@@ -77,15 +77,23 @@ class AuthController extends Controller
     }
 
     /**
-     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
     public function logout()
     {
         try {
             JWTAuth::invalidate(JWTAuth::getToken());
         } catch (JWTException $ex) {
+
         }
         return response('', 201);
     }
 
+    /**
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function refreshToken()
+    {
+        return response('', 201);
+    }
 }

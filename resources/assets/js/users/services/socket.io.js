@@ -1,12 +1,15 @@
-angular.module('users').service('SocketIO', function($rootScope, $window){
-    var SocketIO = $window.io;
-
+angular.module('users').service('SocketIO', function($rootScope, $window, $log){
+    var SocketIO = {};
+    SocketIO.io = $window.io;
     SocketIO.resource = false;
-
+    /**
+     * Initialize the SocketIO connection
+     * @returns {boolean|*}
+     */
     SocketIO.init = function(){
-        if(this.resource) return this.resource;
+        if(SocketIO.resource) return SocketIO.resource;
 
-        var resource = SocketIO.connect(window.location.host + ':3000' ,{
+        SocketIO.resource = SocketIO.io.connect(window.location.host + ':3000' ,{
             forceNew: true,
             transports: [
                 'websocket',
@@ -18,18 +21,14 @@ angular.module('users').service('SocketIO', function($rootScope, $window){
             ]
         });
 
-        resource.on('hb', function () {
-            this.emit('hb', {beat: 1});
-        });
-
-        resource.on('disconnected', function(){
-            resource = false;
+        SocketIO.resource.on('disconnect', function(){
+            SocketIO.resource = false;
             $rootScope.$emit('socket:disconnect');
         });
-
-        this.resource = resource;
-
-        return this.resource;
+        SocketIO.resource.on('call', function($user){
+            $rootScope.$emit('socket:call', $user);
+        });
+        return SocketIO.resource;
     };
     return SocketIO;
 });

@@ -6,30 +6,31 @@ use Closure;
 use JWTAuth;
 use Exception;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 
 
-class AuthJWT
+class AuthJWT extends BaseMiddleware
 {
-
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, \Closure $next)
     {
         try {
-            $user = JWTAuth::parseToken()->authenticate();
-            $token = JWTAuth::refresh(JWTAuth::getToken());
-
-        } catch (\Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-            return response()->json(['error' => 'Token is Invalid'], 403);
-        } catch (\Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-            return response()->json(['error' => 'Token is Expired'], 419);
+            $newToken = $this->auth->setRequest($request)->parseToken()->refresh();
+        } catch (TokenExpiredException $e) {
+            return $this->respond('tymon.jwt.expired', 'token_expired', $e->getStatusCode(), [$e]);
         } catch (JWTException $e) {
-            return response()->json(['error' => $e->getMessage()], 403);
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage(),], 403);
+            return $this->respond('tymon.jwt.invalid', 'token_invalid', $e->getStatusCode(), [$e]);
         }
 
+        // ensure the new token is available as JWTAuth's local copy (accessible through getToken)
+        $this->auth->setToken($newToken);
 
+        // *NOW* we run the controller (or whatever this middleware wraps)
         $response = $next($request);
-        $response->headers->add(['Refresh-Token'=>$token]);
+
+        // Attach the token to the response back to the client
+        $response->headers->set('Authorization', $newToken);
+
         return $response;
     }
 }

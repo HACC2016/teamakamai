@@ -22,9 +22,7 @@
             </ul>
             <ul id="nav-mobile" class="side-nav">
                 <li>
-                    <div class="userView">
-                        Team Akamai
-                    </div>
+                    <div class="userView">Team Akamai</div>
                 </li>
                 <li>
                     <div class="divider"></div>
@@ -45,6 +43,7 @@
         </div>
     </div>
 </div>
+
 <footer ng-class="{visible: !$state.current.hideFooter}" class="page-footer orange ">
     <div class="footer-copyright">
         <div class="container">
@@ -55,7 +54,7 @@
 
 @section('javascripts') @show
 
-<script src="{{url('/')}}:{{env('SOCKET_PORT')}}/socket.io/socket.io.js"></script>
+<script data-key="test" src="{{url('/')}}:{{env('SOCKET_PORT')}}/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="{!! asset('assets/js/vendor.js') !!}"></script>
 <script type="text/javascript" src="{!! asset('assets/js/main.js') !!}"></script>
 <script>

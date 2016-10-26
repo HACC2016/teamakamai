@@ -1,8 +1,9 @@
 /* Auth service */
 
-angular.module("account").service("AuthService", function($rootScope, $state, $http,
+angular.module("account").service("AuthService", function($rootScope, $state, $http, $interval,
                                                           URLTo, AUTH_URLS, AUTH_EVENTS, AUTH_HEADER_SESSION_ID,
                                                           SessionService) {
+    this.interval = false;
 
     this.loginWithData = function($data)
     {
@@ -149,21 +150,20 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
     };
 
     /**
-     * 
-     * @param {type} $token
-     * @returns {unresolved}
+     *
      */
-    this.checkToken = function($token)
+    this.refreshToken = function()
     {
-        return $http.get(URLTo.api(AUTH_URLS.resetPassword, {token: $token}));
+        if(this.interval) { $interval.cancel(this.interval); }
+        this.interval = $interval( function(){
+            $http.get(URLTo.api(AUTH_URLS.refreshToken));
+        }, 30000 );
     };
-
     this.updateProfile = function($data){
         var promise = $http.post(URLTo.api(AUTH_URLS.updateProfile), $data);
         promise.then(function(response){
             return response.data;
-        })
-
+        });
         return promise;
     }
 });

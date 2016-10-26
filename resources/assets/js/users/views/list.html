@@ -6,8 +6,8 @@
         <i class="fa fa-phone"></i>
         <span class="sr-only">End call</span>
     </a>
-
 </div>
+
 <div class="contacts" ng-class="{active: inACall}">
     <div class="input-field">
         <input type="text" ng-model="search" id="search" />
@@ -20,8 +20,9 @@
                 <img ng-src="{{'avatars/' + item.avatar}}" alt="{{item.name}}" />
             </div>
             <div class="card-action center-align teal">
-                <a class="btn-floating waves-effect waves-light green" ng-click="item.isActive ? call(item.client_token) : ''" ng-disabled="!item.isActive"><i class="fa fa-phone" aria-hidden="true"></i></a>
+                <a class="btn-floating waves-effect waves-light green" ng-click="!!item.client_token ? call(item.client_token) : ''" ng-disabled="!item.client_token"><i class="fa fa-phone" aria-hidden="true"></i></a>
                 <div class="white-text">{{item.first_name}} {{item.last_name}}</div>
+                {{item.client_token || '-'}}
             </div>
         </div>
     </div>

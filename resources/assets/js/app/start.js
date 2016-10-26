@@ -74,7 +74,7 @@ angular.module("app", [
         });
 
     })
-    .run(function ($rootScope, $state, $stateParams, URLTo, AuthFilter, GuestFilter, APP) {
+    .run(function ($rootScope, $state, $stateParams, URLTo, AuthFilter, GuestFilter,TokenFilter, APP) {
 
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
@@ -85,4 +85,5 @@ angular.module("app", [
         // Setup route filters
         $rootScope.$on("$stateChangeStart", AuthFilter);
         $rootScope.$on("$stateChangeStart", GuestFilter);
+        $rootScope.$on("$stateChangeStart", TokenFilter);
     });

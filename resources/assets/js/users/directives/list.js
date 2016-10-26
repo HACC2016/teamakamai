@@ -1,5 +1,4 @@
-angular.module('users').directive('usersList', function ($window, $rootScope, UserService, SocketIO,
-                                                         Twilio, AuthService) {
+angular.module('users').directive('usersList', function ($window, $rootScope, UserService, SocketIO, AuthService, $log, CALL_EVENTS ) {
 
     return {
         templateUrl: 'users/views/list.html',
@@ -21,54 +20,37 @@ angular.module('users').directive('usersList', function ($window, $rootScope, Us
                 Twilio.disconnect();
                 scope.inACall = false;
             };
-
-            var activeUsers = [];
-
             var socket = SocketIO.init();
 
-            socket.emit('register', AuthService.getProfile());
-
-            socket.on('register', function (client) {
-                Twilio.init(client.client_token);
+            socket.on('connect', function(){
+                socket.emit('user:register', AuthService.getProfile());
+            });
+            UserService.doSelectList().then(function (data) {
+                scope.items = data;
             });
 
             socket.on('users:list', function (users) {
-                activeUsers = users;
-                for(var i in scope.items){
-                    scope.items[i].client_token = '';
-                    scope.items[i].isActive = false;
-
-                    for(j in activeUsers){
-                        if(activeUsers[j]['id'] == scope.items[i]['id']){
-                            scope.items[i]['client_token'] = activeUsers[j]['client_token'];
-                            scope.items[i].isActive = true;
-                        }
-                    }
-                }
-                scope.$apply();
-            });
-
-            UserService.doSelectList().then(function (data) {
+                data =  scope.items;
                 for(var i in data){
                     data[i].client_token = '';
-                    data[i].isActive = false;
-
-                    for(var j in activeUsers){
-                        if(activeUsers[j]['id'] == data[i]['id']){
-                            data[i]['client_token'] = activeUsers[j]['client_token'];
-                            data[i].isActive = true;
+                    for(var j in users){
+                        if(users[j]['id'] == data[i]['id']){
+                            data[i]['client_token'] = users[j]['client_token'];
+                            break;
                         }
                     }
                 }
                 scope.items = data;
+                scope.$apply();
             });
 
-            scope.preview = function () {
-                $rootScope.$emit('twilio:preview', '.remote-media');
-            };
+            socket.on('call', function(from){
+                $log.info(arguments);
+                $rootScope.$emit(CALL_EVENTS.incomingCall, from);
+            });
 
             scope.call = function (id) {
-                $rootScope.$emit('twilio:call', id);
+                socket.emit('call', id);
             };
         }
     };

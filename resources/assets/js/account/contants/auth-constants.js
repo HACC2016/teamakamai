@@ -20,6 +20,7 @@ angular.module("account")
         updateProfile: "profile",
         updateAvatar: "profile/avatar",
         requestPasswordReset: "auth/recover-password",
-        resetPassword: "auth/reset-password/token"
+        resetPassword: "auth/reset-password/token",
+        refreshToken: "auth/refresh-token"
     })
     .constant("AUTH_HEADER_SESSION_ID", "Authorization");

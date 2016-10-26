@@ -91,13 +91,12 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
             angular.element('.remote-media > .participant-' + participant.identity).remove();
             var items = angular.element('.remote-media > div');
             items.css({width: 100/items.length + '%'});
-
             if(!items.length){
                 $rootScope.$emit('twilio:end', conversation);
             }
         });
         conversation.on('disconnected', function(){
-           // $log.info('[twilio] disconnect event', arguments)
+           $log.info('[twilio] disconnect event', arguments)
         });
 
         conversation.on('ended', function (conversation) {
