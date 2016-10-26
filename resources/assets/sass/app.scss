@@ -91,12 +91,6 @@ video,audio,canvas{
     font-size: 80px;
   }
 }
-nav,footer{
-  display: none;
-  &.visible{
-    display: block;
-  }
-}
 footer{
   position: absolute;
   bottom: 0;
@@ -112,3 +106,4 @@ body{
 }
 @import 'calls';
 @import 'contacts';
+@import 'nav';

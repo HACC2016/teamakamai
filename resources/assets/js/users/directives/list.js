@@ -1,4 +1,4 @@
-angular.module('users').directive('usersList', function ($window, $rootScope, UserService, SocketIO, AuthService, $log, CALL_EVENTS ) {
+angular.module('users').directive('usersList', function ($window, $rootScope, UserService, SocketIO, AuthService, SessionService, $log, CALL_EVENTS ) {
 
     return {
         templateUrl: 'users/views/list.html',

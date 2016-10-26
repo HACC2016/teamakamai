@@ -13,26 +13,7 @@
 
 <body>
 <div class="body">
-    <nav ng-class="{visible: !$state.current.hideFooter}" class="light-blue lighten-1" role="navigation">
-        <div class="nav-wrapper container"><a id="logo-container" ui-sref="home" href="#" class="brand-logo">Team Akamai</a>
-            <ul class="right hide-on-med-and-down">
-                <li><a class="hide waves-effect waves-light" ui-sref="account:login">Login</a></li>
-                <li><a class="waves-effect waves-light" ui-sref="account:profile">Profile</a></li>
-                <li><a class=" waves-effect waves-light" ui-sref="account:logout">Logout</a></li>
-            </ul>
-            <ul id="nav-mobile" class="side-nav">
-                <li>
-                    <div class="userView">Team Akamai</div>
-                </li>
-                <li>
-                    <div class="divider"></div>
-                </li>
-                <li><a ui-sref="account:profile" href="#">Profile</a></li>
-                <li><a ui-sref="account:logout" href="#">Logout</a></li>
-            </ul>
-            <a href="#" sidenav data-activates="nav-mobile" class="button-collapse"><i class="fa fa-list"></i></a>
-        </div>
-    </nav>
+    <nav ng-nav ng-if="!$state.current.hideFooter" class="light-blue lighten-1" role="navigation"></nav>
 
     <div ui-view>
         <div class="center-align" id="getting-started">
@@ -44,7 +25,7 @@
     </div>
 </div>
 
-<footer ng-class="{visible: !$state.current.hideFooter}" class="page-footer orange ">
+<footer ng-if="!$state.current.hideFooter" class="page-footer orange ">
     <div class="footer-copyright">
         <div class="container">
             Made by <a class="orange-text text-lighten-3" href="https://dev.teamakamai.com">Team Akamai</a>

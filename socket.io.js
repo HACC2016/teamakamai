@@ -24,10 +24,6 @@ io.sockets.on('connection', function (socket) {
     var client = false;
     socket.join(socket.client.id);
 
-    socket.on('call', function(to){
-        socket.to(to).emit('call', client);
-    });
-
     /**
      * Register to presence service
      */
@@ -40,6 +36,11 @@ io.sockets.on('connection', function (socket) {
 
         users.addClient(client);
         io.sockets.emit('users:list', users.getData());
+    });
+
+    socket.on('call', function(to){
+        console.log("%s %s is calling %s %s", client.first_name, client.last_name, to.first_name, to.last_name);
+        socket.to(to).emit('call', client);
     });
 
     socket.on('disconnect', function () {

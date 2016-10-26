@@ -1,0 +1,28 @@
+nav{
+  .side-nav{
+    color: #000;
+    padding-top: 30px;
+    li{
+      margin: 0;
+      padding: 0;
+      line-height:inherit;
+      i{
+        margin: 0;
+        padding: 0;
+        height: auto;
+      }
+      &:after{
+        clear: both;
+        content: '';
+        display:block;
+      }
+    }
+    .center-align{
+      line-height: 25px;
+
+    }
+    .small-text {
+      font-size: 11px;
+    }
+  }
+}

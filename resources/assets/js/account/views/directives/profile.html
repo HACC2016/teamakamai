@@ -1,0 +1,26 @@
+
+<div class="nav-wrapper container"><a id="logo-container" ui-sref="home" href="#" class="brand-logo">Team Akamai</a>
+    <ul class="right hide-on-med-and-down">
+        <li><a class="hide waves-effect waves-light" ui-sref="account:login">Login</a></li>
+        <li><a class="waves-effect waves-light" ui-sref="account:profile">
+            {{user.first_name}} {{user.last_name}}
+        </a></li>
+        <li><a class=" waves-effect waves-light" ui-sref="account:logout">Logout</a></li>
+    </ul>
+    <ul id="nav-mobile" class="side-nav">
+        <li>
+            <div class="center-align">
+                <img style="border: 1px solid #dedede; padding: 3px;" class="circle responsive-img" ng-src="avatars/{{user.avatar}}"/>
+                <div>  {{user.firstname}} {{user.last_name}} </div>
+
+                <div class="small-text">{{user.client_token}}</div>
+            </div>
+        </li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a ui-sref="account:profile" href="#"> <i class="fa fa-user"></i> Profile</a></li>
+        <li><a ui-sref="account:logout" href="#"> <i class="fa fa-power-off"></i> Logout</a></li>
+    </ul>
+    <a href="#" sidenav data-activates="nav-mobile" class="button-collapse"><i class="fa fa-list"></i></a>
+</div>
