@@ -25,23 +25,11 @@ angular.module('users').directive('usersList', function ($window, $rootScope, Us
             socket.on('connect', function(){
                 socket.emit('user:register', AuthService.getProfile());
             });
-            UserService.doSelectList().then(function (data) {
-                scope.items = data;
-            });
 
             socket.on('users:list', function (users) {
-                data =  scope.items;
-                for(var i in data){
-                    data[i].client_token = '';
-                    for(var j in users){
-                        if(users[j]['id'] == data[i]['id']){
-                            data[i]['client_token'] = users[j]['client_token'];
-                            break;
-                        }
-                    }
-                }
-                scope.items = data;
-                scope.$apply();
+                UserService.doSelectList(users).then(function(response){
+                    scope.items = response;
+                });
             });
 
             socket.on('call', function(from){

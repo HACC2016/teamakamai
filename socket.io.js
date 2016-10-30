@@ -13,11 +13,15 @@ var users = require('./server/users');
 
 io.set('heartbeat timeout', 4000);
 io.set('heartbeat interval', 2000);
-
+/**
+ * Listen
+ */
 https.listen(process.env.SOCKET_PORT, function () {
     console.log('listening on *:' + process.env.SOCKET_PORT);
 });
-
+/**
+ * Clean startup stats
+ */
 sql('update users set `client_token` = "";');
 
 io.sockets.on('connection', function (socket) {
@@ -37,12 +41,17 @@ io.sockets.on('connection', function (socket) {
         users.addClient(client);
         io.sockets.emit('users:list', users.getData());
     });
-
+    /**
+     * Emit a call event
+     */
     socket.on('call', function(to){
-        console.log("%s %s is calling %s %s", client.first_name, client.last_name, to.first_name, to.last_name);
+        console.log("%s %s is calling %s", client.first_name, client.last_name, to);
         socket.to(to).emit('call', client);
     });
 
+    /**
+     * Respond to a disconnect event
+     */
     socket.on('disconnect', function () {
         if (client)  sql('update users set client_token = "" where id = ?', [client.id]);
         console.log("Client #%d \"%s %s\" disconnected (%s) ",client.id, client.first_name, client.last_name, socket.client.id );
@@ -51,6 +60,9 @@ io.sockets.on('connection', function (socket) {
         io.sockets.emit('users:list', users.getData());
     });
 
+    /**
+     * Get active users
+     */
     socket.on('users:list', function(){
         socket.emit('users:list',users.getData());
     });
