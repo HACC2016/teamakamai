@@ -161,6 +161,7 @@ return [
          * Custom providers
          */
         telecare\Providers\UserServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
 

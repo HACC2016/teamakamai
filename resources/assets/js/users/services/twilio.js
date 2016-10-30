@@ -17,7 +17,7 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
 
         $http.get(URLTo.api(this.urls.token, {client_token: $client_token})).then(function (response) {
             _twilio.manager = new _twilio.AccessManager(response.data.token);
-            _twilio.client = new _twilio.Conversations.Client(response.data.token);
+            _twilio.client = new _twilio.Conversations.Client(_twilio.manager);
             $rootScope.$emit('twilio:connected', _twilio.client);
         });
     };
@@ -51,7 +51,7 @@ angular.module('users').service('Twilio', function ($rootScope, $window, $log,
     // TODO: Move to controller / directive
     $rootScope.$on('twilio:incoming', function (ev, invite) {
         $log.info('[twilio] Incoming from ', invite.from);
-        if (!confirm("Do you want to accept the call?")) return false;
+        //if (!confirm("Do you want to accept the call?")) return false;
 
         invite.accept().then(function (conversation) {
             $rootScope.$emit('twilio:conversation-start', conversation);

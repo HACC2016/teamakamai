@@ -1,18 +1,17 @@
 /* Auth service */
 
-angular.module("account").service("AuthService", function($rootScope, $state, $http, $interval,
-                                                          URLTo, AUTH_URLS, AUTH_EVENTS, AUTH_HEADER_SESSION_ID,
-                                                          SessionService) {
+angular.module("account").service("AuthService", function ($rootScope, $state, $http, $interval,
+                                                           URLTo, AUTH_URLS, AUTH_EVENTS, AUTH_HEADER_SESSION_ID,
+                                                           SessionService) {
     this.interval = false;
 
-    this.loginWithData = function($data)
-    {
+    this.loginWithData = function ($data) {
         SessionService.create($data.token, $data.user);
         // Broadcast a login success event
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, $data);
     };
 
-    /** 
+    /**
      * Log the user in.
      *
      * @param email
@@ -27,13 +26,13 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
             password: password
         });
 
-        promise.catch(function(response) {
+        promise.catch(function (response) {
             // Broadcast a login failed event
             $rootScope.$broadcast(AUTH_EVENTS.loginFailed, response);
             return response;
         });
 
-        return promise.then(function(response) {
+        return promise.then(function (response) {
             AuthService.loginWithData(response.data);
             return response;
         });
@@ -57,13 +56,13 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
             password_confirmation: data.password_confirmation,
         });
 
-        promise.catch(function(response) {
+        promise.catch(function (response) {
             // Broadcast a login failed event
             $rootScope.$broadcast(AUTH_EVENTS.signupFailed, response);
             return response;
         });
 
-        return promise.then(function(response) {
+        return promise.then(function (response) {
             AuthService.loginWithData(response.data);
             return response;
         });
@@ -77,7 +76,7 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
      * @returns {boolean}
      */
     this.isAuthenticated = function () {
-        return !! SessionService.getId();
+        return !!SessionService.getId();
     };
 
     /**
@@ -85,16 +84,15 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
      *
      * @returns {*}
      */
-    this.logout = function($noredirect) {
+    this.logout = function ($noredirect) {
         $http
             .post(URLTo.api(AUTH_URLS.logout))
-            .then(function(response) {
+            .then(function (response) {
                 // Destroy session
                 SessionService.destroy();
                 // Broadcast a logout success event
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess, response);
-                if(!$noredirect)
-                {
+                if (!$noredirect) {
                     $state.go('account:login');
                 }
                 return response;
@@ -108,7 +106,7 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
      * @param email
      * @returns {HttpPromise}
      */
-    this.requestPasswordReset = function(email) {
+    this.requestPasswordReset = function (email) {
         return $http.post(URLTo.api(AUTH_URLS.requestPasswordReset), {
             email: email
         });
@@ -122,13 +120,13 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
      * @param token
      * @returns {HttpPromise}
      */
-    this.validatePasswordResetToken = function(email, token) {
+    this.validatePasswordResetToken = function (email, token) {
         return $http
             .post(URLTo.api(AUTH_URLS.validatePasswordResetToken), {
                 email: email,
                 token: token
             })
-            .then(function(response) {
+            .then(function (response) {
                 return response.data.userId;
             });
     };
@@ -141,29 +139,34 @@ angular.module("account").service("AuthService", function($rootScope, $state, $h
      * @param $token
      * @returns {HttpPromise}
      */
-    this.resetPassword = function(data, $token) {
+    this.resetPassword = function (data, $token) {
         return $http.post(URLTo.api(AUTH_URLS.resetPassword, {token: $token}), data);
     };
 
-    this.getProfile = function(){
+    this.getProfile = function () {
         return SessionService.getData();
     };
 
     /**
      *
      */
-    this.refreshToken = function()
-    {
-        if(this.interval) { $interval.cancel(this.interval); }
-        this.interval = $interval( function(){
+    this.refreshToken = function () {
+        if (this.interval) {
+            $interval.cancel(this.interval);
+        }
+        this.interval = $interval(function () {
             $http.get(URLTo.api(AUTH_URLS.refreshToken));
-        }, 30000 );
+        }, 30000);
     };
-    this.updateProfile = function($data){
+    this.updateProfile = function ($data) {
         var promise = $http.post(URLTo.api(AUTH_URLS.updateProfile), $data);
-        promise.then(function(response){
+        promise.then(function (response) {
             return response.data;
         });
         return promise;
+    }
+
+    this.session = function () {
+        return SessionService;
     }
 });

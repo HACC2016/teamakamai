@@ -1,5 +1,5 @@
-angular.module('users').directive('usersList', function ($window, $rootScope, UserService, SocketIO, AuthService, SessionService, $log, CALL_EVENTS ) {
-
+angular.module('users').directive('usersList', function ($rootScope, UserService, Twilio,
+                                                         SocketIO, AuthService,CALL_EVENTS ) {
     return {
         templateUrl: 'users/views/list.html',
         link: function (scope, element, arguments) {
@@ -24,16 +24,17 @@ angular.module('users').directive('usersList', function ($window, $rootScope, Us
 
             socket.on('connect', function(){
                 socket.emit('user:register', AuthService.getProfile());
+                Twilio.init(socket.id);
             });
 
             socket.on('users:list', function (users) {
                 UserService.doSelectList(users).then(function(response){
                     scope.items = response;
+                    setTimeout(function(){  scope.$apply(); }, 500);
                 });
             });
 
             socket.on('call', function(from){
-                $log.info(arguments);
                 $rootScope.$emit(CALL_EVENTS.incomingCall, from);
             });
 

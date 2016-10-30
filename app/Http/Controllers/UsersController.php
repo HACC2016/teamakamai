@@ -20,12 +20,6 @@ use Illuminate\Support\Facades\File;
  */
 class UsersController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('jwt-auth',[
-            //'except'=>'updateProfile'
-        ]);
-    }
 
     /**
      * @param \telecare\Interfaces\UserRepositoryInterface $users
