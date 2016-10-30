@@ -30,7 +30,6 @@ angular.module('users').service('UserService', function ($http, URLTo) {
      */
     this.isUserActive = function($user, $activeArray){
         if(!$activeArray) return false;
-        console.log($user, $activeArray);
         for(var i in $activeArray){
             if($activeArray[i].id == $user.id) {
                 return $activeArray[i].client_token;

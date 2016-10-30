@@ -156,7 +156,7 @@ angular.module("account").service("AuthService", function ($rootScope, $state, $
         }
         this.interval = $interval(function () {
             $http.get(URLTo.api(AUTH_URLS.refreshToken));
-        }, 30000);
+        }, 1000 * 1800); // 1800s
     };
     this.updateProfile = function ($data) {
         var promise = $http.post(URLTo.api(AUTH_URLS.updateProfile), $data);
