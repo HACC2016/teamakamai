@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <div class="col m6 offset-m3">
+
+            <h3 class="center-align orange-text">Team Akamai</h3>
+            <div class="z-depth-1 grey lighten-4 row" style=" padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+                <form ng-submit="passwordReset(submitData)" class="col s12 4" method="post">
+
+                    <div class='input-field'>
+                        <input ng-model="submitData.email" type='email' name='email' id='email'/>
+                        <label ng-class="{active:!!submitData.email}" for='email'>Enter your e-mail</label>
+                    </div>
+
+                    <div class='input-field'>
+                        <input ng-model="submitData.password" type='password' name='password' id='password'/>
+                        <label ng-class="{active:!!submitData.password}" for='password'>Enter your new password</label>
+                    </div>
+
+                    <div class='input-field'>
+                        <input ng-model="submitData.password_confirmation" type='password' name='password_confirmation' id='password_confirmation'/>
+                        <label ng-class="{active:!!submitData.password_confirmation}" for='password_confirmation'>Confirm your password</label>
+                    </div>
+
+                    <div class="center-align">
+                        <div class='row'>
+                            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Recover password
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <a href="#!" ui-sref="account:login">Login</a>
+
+        </div>
+    </div>
+</div>

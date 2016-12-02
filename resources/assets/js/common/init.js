@@ -1,1 +1,1 @@
-angular.module('common', ['html']);
+angular.module('common', ["common", "restmod", "platanus.inflector", 'html']);

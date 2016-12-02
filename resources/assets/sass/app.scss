@@ -1,10 +1,73 @@
 @charset "UTF-8";
 
+
+// Mixins
+// @import "../../../bower_components/materialize/sass/components/prefixer";
+@import "../../../bower_components/materialize/sass/components/mixins";
+@import "../../../bower_components/materialize/sass/components/color";
+
+// Variables;
+@import "../../../bower_components/materialize/sass/components/variables";
+
+// Reset
+@import "../../../bower_components/materialize/sass/components/normalize";
+
+// components
+@import "../../../bower_components/materialize/sass/components/global";
+//@import "../../../bower_components/materialize/sass/components/icons-material-design";
+@import "../../../bower_components/materialize/sass/components/grid";
+@import "../../../bower_components/materialize/sass/components/navbar";
+@import "../../../bower_components/materialize/sass/components/roboto";
+@import "../../../bower_components/materialize/sass/components/typography";
+@import "../../../bower_components/materialize/sass/components/cards";
+@import "../../../bower_components/materialize/sass/components/toast";
+//@import "../../../bower_components/materialize/sass/components/tabs";
+@import "../../../bower_components/materialize/sass/components/tooltip";
+@import "../../../bower_components/materialize/sass/components/buttons";
+@import "../../../bower_components/materialize/sass/components/dropdown";
+@import "../../../bower_components/materialize/sass/components/waves";
+//@import "../../../bower_components/materialize/sass/components/modal";
+//@import "../../../bower_components/materialize/sass/components/collapsible";
+//@import "../../../bower_components/materialize/sass/components/chips";
+@import "../../../bower_components/materialize/sass/components/materialbox";
+@import "../../../bower_components/materialize/sass/components/forms/forms";
+//@import "../../../bower_components/materialize/sass/components/table_of_contents";
+@import "../../../bower_components/materialize/sass/components/sideNav";
+//@import "../../../bower_components/materialize/sass/components/preloader";
+//@import "../../../bower_components/materialize/sass/components/slider";
+//@import "../../../bower_components/materialize/sass/components/carousel";
+//@import "../../../bower_components/materialize/sass/components/date_picker/default";
+//@import "../../../bower_components/materialize/sass/components/date_picker/default.date";
+//@import "../../../bower_components/materialize/sass/components/date_picker/default.time";
+
+// font-awesome
+$fa-font-path: '../fonts/font-awesome/';
+@import "../../../bower_components/font-awesome/scss/variables";
+@import "../../../bower_components/font-awesome/scss/mixins";
+@import "../../../bower_components/font-awesome/scss/path";
+@import "../../../bower_components/font-awesome/scss/core";
+@import "../../../bower_components/font-awesome/scss/larger";
+@import "../../../bower_components/font-awesome/scss/fixed-width";
+@import "../../../bower_components/font-awesome/scss/list";
+@import "../../../bower_components/font-awesome/scss/bordered-pulled";
+@import "../../../bower_components/font-awesome/scss/animated";
+@import "../../../bower_components/font-awesome/scss/rotated-flipped";
+@import "../../../bower_components/font-awesome/scss/stacked";
+@import "../../../bower_components/font-awesome/scss/icons";
+@import "../../../bower_components/font-awesome/scss/screen-reader";
+@import "vendors/jquery-confirm.min";
+
+
+
 html, body{
   min-height: 100%;
+  -webkit-text-size-adjust: none;
+  height: 100%;
+  width: 100%;
 }
 body {
-  font-family: 'Lato';
+  font-family: 'Roboto', sans-serif;
+  background: #fcfcfc;
 }
 
 .fa-btn {
@@ -15,5 +78,32 @@ video,audio,canvas{
     width: 100%;
 }
 
-@import "../../../bower_components/toastr/toastr.scss";
+#getting-started
+{
+  position: absolute;
+  top: 0;left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255,255,255,0.9);
+  z-index: 2;
+
+  p{
+    font-size: 80px;
+  }
+}
+footer{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 91px;
+}
+body{
+  height: auto !important;
+  position: relative;
+  padding-bottom: 121px;
+  min-height: 100%;
+}
 @import 'calls';
+@import 'contacts';
+@import 'nav';

@@ -1,0 +1,1 @@
+angular.module('account', ["common", "restmod", "platanus.inflector"]);

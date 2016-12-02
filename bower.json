@@ -18,14 +18,16 @@
   "dependencies": {
     "angular": "angularjs#^1.5.7",
     "url-to": "^0.1.1",
-    "bootstrap-sass": "bootstrap-sass-official#^3.3.6",
     "angular-ui-router": "^0.3.1",
     "angular-restmod": "^1.1.11",
-    "imagesloaded": "^4.1.0",
-    "imagefill": "*",
     "lodash": "^4.13.1",
     "cookies-js": "^1.2.2",
     "twilio-conversations": "^0.13.8",
-    "twilio-common": "^0.1.5"
+    "twilio-common": "^0.1.5",
+    "materialize": "^0.97.7",
+    "font-awesome": "https://github.com/FortAwesome/Font-Awesome.git#^4.6.3",
+    "angular-sanitize": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-plupload": "^0.1.6"
   }
 }

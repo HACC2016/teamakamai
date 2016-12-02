@@ -23,9 +23,9 @@ class UserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(
-            "telecare\\Interfaces\\UserRepositoryInterface",
-            "telecare\\Repositories\\UserRepository"
+        $this->app->singleton(
+            'telecare\Interfaces\UserRepositoryInterface',
+            'telecare\Repositories\UserRepository'
         );
     }
 }

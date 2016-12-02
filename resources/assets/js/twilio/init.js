@@ -1,1 +1,1 @@
-angular.module('twilio', []);
+angular.module('twilio', ["common", "restmod", "platanus.inflector"]);

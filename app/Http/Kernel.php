@@ -29,7 +29,7 @@ class Kernel extends HttpKernel
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-            \telecare\Http\Middleware\VerifyCsrfToken::class
+            // \telecare\Http\Middleware\VerifyCsrfToken::class
         ],
 
         'api' => [
@@ -45,10 +45,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \telecare\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'can' => \Illuminate\Foundation\Http\Middleware\Authorize::class,
-        'guest' => \telecare\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'auth'        => \telecare\Http\Middleware\Authenticate::class,
+        'auth.basic'  => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'can'         => \Illuminate\Foundation\Http\Middleware\Authorize::class,
+        'guest'       => \telecare\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'    => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'jwt.auth'    => \Tymon\JWTAuth\MiddlewareGetUserFromToken::class,
+        'jwt.refresh' => \Tymon\JWTAuth\MiddlewareRefreshToken::class,
+        'jwt-auth'    => \telecare\Http\Middleware\AuthJWT::class,
     ];
 }

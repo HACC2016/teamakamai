@@ -1,123 +1,119 @@
-var gulp         = require('gulp'),
-    concat       = require('gulp-concat'),
-    header       = require('gulp-header'),
-    uglify       = require('gulp-uglify'),
-    sass         = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    cssmin       = require('gulp-cssmin'),
-    sourcemaps   = require('gulp-sourcemaps'),
-    html2js      = require('gulp-html2js'),
-    pkg          = require('./package.json'),
+var gulp         = require("gulp"),
+    concat       = require("gulp-concat"),
+    header       = require("gulp-header"),
+    uglify       = require("gulp-uglify"),
+    sass         = require("gulp-sass"),
+    livereload   = require("gulp-livereload"),
+    autoprefixer = require("gulp-autoprefixer"),
+    cssmin       = require("gulp-cssmin"),
+    sourcemaps   = require("gulp-sourcemaps"),
+    html2js      = require("gulp-html2js"),
+    pkg          = require("./package.json"),
     banner       = [
-        '/**',
-        ' ** <%= pkg.name %> - <%= pkg.description %>',
-        ' ** @author <%= pkg.author %>',
-        ' ** @version v<%= pkg.version %>',
-        ' **/'
+        "/**",
+        " ** <%= pkg.name %> - <%= pkg.description %>",
+        " ** @author <%= pkg.author %>",
+        " ** @version v<%= pkg.version %>",
+        " **/"
     ].join("\n");
 
 var JS         = [
-    'bower_components/twilio-common/dist/twilio-common.js',
-    'bower_components/twilio-conversations/dist/twilio-conversations.js',
+    "bower_components/twilio-common/dist/twilio-common.js",
+    "bower_components/twilio-conversations/dist/twilio-conversations.js",
 
-    'bower_components/jquery/dist/jquery.js',
+    "bower_components/jquery/dist/jquery.js",
+    "bower_components/materialize/dist/js/materialize.js",
     "bower_components/momentjs/moment.js",
     "bower_components/lodash/dist/lodash.js",
-    "bower_components/cookies-js/src/cookies.js",
-    'bower_components/url-to/url-to.js',
+    "bower_components/cookies-js/dist/cookies.js",
+    "bower_components/url-to/url-to.js",
     // angular
     "bower_components/angular/angular.js",
-    // "bower_components/angular-ui-router/release/angular-ui-router.js",
+    "bower_components/angular-ui-router/release/angular-ui-router.js",
     "bower_components/angular-inflector/dist/angular-inflector.js",
     "bower_components/angular-restmod/dist/angular-restmod.js",
-
-    // bootstrap
-    //'bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js',
-    //'bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js',
-    //'bower_components/bootstrap-sass/assets/javascripts/bootstrap/button.js',
-    //'bower_components/bootstrap-sass/assets/javascripts/bootstrap/carousel.js',
-    'bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js',
-    'bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js',
-    'bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js',
-    //'bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js',
-    //'bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js',
-    'bower_components/bootstrap-sass/assets/javascripts/bootstrap/transition.js',
-    //'bower_components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js',
-    //'bower_components/bootstrap-sass/assets/javascripts/bootstrap/popover.js',
-
+    "bower_components/angular-animate/angular-animate.js",
+    "bower_components/plupload/js/plupload.full.min.js",
+    "bower_components/angular-plupload/dist/angular-plupload.min.js",
+    "bower_components/angular-sanitize/angular-sanitize.js"
 ];
 var JS_SCRIPTS = [
-    'resources/assets/js/common/init.js',
-    'resources/assets/js/common/**/*.js',
-    'resources/assets/js/app/init.js',
-    'resources/assets/js/app/**/*.js',
-    'resources/assets/js/users/init.js',
-    'resources/assets/js/users/**/*.js',
-    'resources/assets/js/**/*.js',
-    'resources/assets/js/**/**/*.js',
-    'resources/assets/js/*.js'
+    "resources/assets/js/html.js",
+    "resources/assets/js/common/init.js",
+    "resources/assets/js/common/**/*.js",
+    "resources/assets/js/app/start.js",
+    "resources/assets/js/app/**/*.js",
+    "resources/assets/js/account/init.js",
+    "resources/assets/js/account/**/*.js",
+    "resources/assets/js/twilio/start.js",
+    "resources/assets/js/twilio/**/*.js",
+    "resources/assets/js/users/start.js",
+    "resources/assets/js/users/**/*.js",
 ];
 
-gulp.task('html2js', function () {
-    return gulp.src('resources/views/angular/**/*.html')
-        .pipe(html2js('angular.js', {
-            base: 'resources/views/angular',
-            name: 'html'
+gulp.task("html2js", function () {
+    return gulp.src(["resources/assets/js/**/views/*.html", "resources/assets/js/**/views/**/*.html"])
+        .pipe(html2js("html.js", {
+            base: "resources/assets/js",
+            name: "html"
         }))
-        .pipe(gulp.dest('resources/assets/js/'));
+        .pipe(gulp.dest("resources/assets/js/"));
 });
+gulp.task("vendors", function(){
 
-gulp.task('js:dev', ['html2js'], function () {
-    gulp.src(JS)
+    return gulp.src(JS)
         .pipe(sourcemaps.init())
-        .pipe(concat('vendor.js'), {newLine: ';'})
+        .pipe(concat("vendor.js"), {newLine: ";"})
         .pipe(uglify())
         .pipe(header(banner, {pkg: pkg}))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('public/assets/js/'));
+        .pipe(sourcemaps.write("."))
+        .pipe(gulp.dest("public/assets/js/"));
+});
+
+
+gulp.task("js:dev", ["html2js"], function () {
 
     gulp.src(JS_SCRIPTS)
         .pipe(sourcemaps.init())
-        .pipe(concat('main.js'), {newLine: ';'})
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('public/assets/js/'));
+        .pipe(concat("main.js"), {newLine: ";"})
+        .pipe(sourcemaps.write("."))
+        .pipe(gulp.dest("public/assets/js/"));
 });
-gulp.task('js:main', ['js:dev'], function () {
+gulp.task("js:main", ["js:dev"], function () {
 
-    return gulp.src('public/assets/js/main.js')
+    return gulp.src("public/assets/js/main.js")
         .pipe(uglify())
         .pipe(header(banner, {pkg: pkg}))
-        .pipe(gulp.dest('public/assets/js/'));
+        .pipe(gulp.dest("public/assets/js/"));
 });
 
-gulp.task('sass:dev', function () {
+gulp.task("sass:dev", function () {
     return gulp.src("resources/assets/sass/app.scss")
         .pipe(sourcemaps.init({debug: true}))
-        .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('public/assets/css/'));
+        .pipe(sass({outputStyle: "expanded"}).on("error", sass.logError))
+        .pipe(sourcemaps.write("."))
+        .pipe(gulp.dest("public/assets/css/"));
 });
 
-gulp.task('sass:main', ['sass:dev'], function () {
+gulp.task("sass:main", ["sass:dev"], function () {
     return gulp.src("public/assets/css/app.css")
         .pipe(autoprefixer("last 1 version", "> 1%", "ie 8", "ie 7"))
         .pipe(cssmin({keepSpecialComments: 0}))
         .pipe(header(banner, {pkg: pkg}))
-        .pipe(gulp.dest('public/assets/css/'));
+        .pipe(gulp.dest("public/assets/css/"));
 });
-gulp.task('copy', function () {
+gulp.task("watch", function () {
+    gulp.watch(["resources/assets/js/**/views/*.html", "resources/assets/js/**/views/**/*.html"], ["html2js", "js:dev"]);
+    gulp.watch(JS_SCRIPTS, ["js:dev"]);
+    gulp.watch(["resources/assets/sass/*.scss", "resources/assets/sass/**/*.scss"], ["sass:dev"]);
 
+    livereload.listen();
+
+    gulp.watch("public/assets/css/app.css").on("change", livereload.changed);
+    gulp.watch("public/assets/js/vendor.js").on("change", livereload.changed);
+    gulp.watch("public/assets/js/main.js").on("change", livereload.changed);
 });
 
-gulp.task('watch', function () {
-    gulp.watch('resources/views/angular/**/*.html', ['js:dev']);
-    gulp.watch(JS_SCRIPTS, ['js:dev']);
-    gulp.watch(['resources/assets/sass/*.scss', 'resources/assets/sass/**/*.scss'], ['sass:dev']);
-    //gulp.watch($paths.watch.copy, ['copy']);
-    gulp.watch('gulpfile.js', ['watch']);
-});
-
-
-gulp.task('local', ['js:dev', 'sass:dev', 'copy']);
-gulp.task('default', ['js:main', 'sass:main', 'copy']);
-gulp.task('run', ['default', 'watch']);
+gulp.task("local", ["js:dev", "sass:dev"]);
+gulp.task("default", ["vendors","js:main", "sass:main"]);
+gulp.task("run", ["vendors", "local", "watch"]);

@@ -8,7 +8,10 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "twilio/sdk": "^4.10"
+        "twilio/sdk": "^4.10",
+        "tymon/jwt-auth": "1.0.*@dev",
+        "barryvdh/laravel-cors": "^0.8.1",
+        "barryvdh/laravel-ide-helper": "^2.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -19,7 +22,8 @@
     },
     "autoload": {
         "classmap": [
-            "database"
+            "database",
+            "app/Models"
         ],
         "psr-4": {
             "telecare\\": "app/"

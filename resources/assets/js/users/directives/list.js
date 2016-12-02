@@ -1,32 +1,46 @@
-angular.module('users').directive('usersList', function($window,$rootScope, UserService, io, Twilio){
+angular.module('users').directive('usersList', function ($rootScope, UserService, Twilio,
+                                                         SocketIO, AuthService,CALL_EVENTS ) {
     return {
-        templateUrl: 'users/list.html',
-        link: function(scope,element,arguments){
+        templateUrl: 'users/views/list.html',
+        link: function (scope, element, arguments) {
+            scope.search = '';
+            scope.hidePreview = false;
+            scope.inACall = false;
 
-            UserService.doSelectList().then(function(data){
-                scope.items = data;
-            });
-
-            Twilio.init();
-            var socket = io.init();
-
-            socket.emit('register', $window.user);
-
-            scope.call = function(id){
-                $rootScope.$emit('twilio:call', id);
-            };
-            setInterval(function(){
-                socket.emit('users:list', {hb: 1});
-            }, 400);
-
-            socket.on('users:list', function(users){
-                var items = scope.items;
-                for(var i in items){
-                    items[i].active = users.indexOf(items[i].id) >= 0;
-                }
-                scope.items = items;
+            $rootScope.$on('twilio:participant-connected', function(){
+                scope.inACall = true;
                 scope.$apply();
             });
+            $rootScope.$on('twilio:end', function(){
+                scope.inACall = false;
+                scope.$evalAsync();
+            });
+
+            scope.disconnect = function(){
+                Twilio.disconnect();
+                scope.inACall = false;
+            };
+            var socket = SocketIO.init();
+
+            socket.on('connect', function(){
+                socket.emit('user:register', AuthService.getProfile());
+                Twilio.init(socket.id);
+            });
+
+            socket.on('users:list', function (users) {
+                UserService.doSelectList(users).then(function(response){
+                    scope.items = response;
+                    setTimeout(function(){  scope.$apply(); }, 500);
+                });
+            });
+
+            socket.on('call', function(from){
+                $rootScope.$emit(CALL_EVENTS.incomingCall, from);
+            });
+
+            scope.call = function (id) {
+                socket.emit('call', id);
+            };
         }
     };
 });

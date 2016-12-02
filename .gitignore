@@ -186,7 +186,11 @@ composer.phar
 *.orig
 
 ### personal ###
-public/assets/
+public/assets/css
+public/assets/js
 .idea/
 .vagrant/
-!public/assets/img
+public/devTelecare.tar
+public/phpmyadmin
+/public/avatars/*.*
+resources/assets/js/html.js

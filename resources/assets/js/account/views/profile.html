@@ -1,0 +1,68 @@
+<div class="container">
+    <h1>Profile</h1>
+
+    <div class="card light-blue lighten-5" ng-class="{hide: !success}">
+        <div class="card-content light-blue-text">
+            <p><strong>Success</strong> : Your profile got updated.</p>
+        </div>
+    </div>
+
+    <div class="card red" ng-class="{hide: !errors.length}">
+        <div class="card-content white-text">
+            <p><strong>DANGER</strong> : Fix the errors before continue</p>
+            <div ng-repeat="item in errors">{{ item[0] }}</div>
+        </div>
+    </div>
+
+    <br/>
+
+    <form ng-submit="changeProfile(data);">
+        <div class="row">
+            <div class="col m3 center-align">
+                <img style="border: solid 1px #dedede; padding: 2px;"
+                     ng-src="{{data.avatar ? 'avatars/' + data.avatar : '//placehold.it/150x150'}}"
+                     alt="{{data.first_name}} {{data.last_name}}" class="circle responsive-img">
+
+                <a class="btn" plupload="fileUpload.url"
+                   plupload-options="fileUpload.options"
+                   plupload-callbacks="fileUpload.callbacks" > Change </a>
+
+            </div>
+            <div class="col m9">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input ng-model="data.first_name" id="first_name" type="text"/>
+                        <label ng-class="{active:!!data.first_name}" for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="last_name" ng-model="data.last_name" type="text"/>
+                        <label ng-class="{active:!!data.last_name}" for="last_name">Last Name</label>
+                    </div>
+                </div>
+
+                <div class="input-field  ">
+                    <input autocomplete="off" ng-model="data.email" id="email" type="text"/>
+                    <label ng-class="{active:!!data.email}" for="email">E-mail</label>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input autocomplete="off" ng-model="data.password" id="password" type="password"/>
+                        <label ng-class="{active:!!data.password}" for="password">Password</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input autocomplete="off" ng-model="data.password_confirmation" id="password_confirmation"
+                               type="password"/>
+                        <label ng-class="{active:!!data.password_confirmation}" for="password_confirmation">Password confirmation</label>
+                    </div>
+                </div>
+
+                <div class="center-align">
+                    <button class="btn waves-effect waves-light" type="submit">
+                        Save profile
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
